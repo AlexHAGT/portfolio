@@ -1,0 +1,199 @@
+/* =========================================================================
+   layout.css — structure de la page
+   Conteneur, grille, en-tête, sections et pied de page.
+   Les classes suivent le principe « bloc__élément » : .en-tete__nom est
+   l'élément « nom » du bloc « en-tete ». On voit tout de suite à quoi
+   appartient chaque classe.
+   ========================================================================= */
+
+
+/* -------------------------------------------------------------------------
+   1. Conteneur et grille
+   ------------------------------------------------------------------------- */
+
+/* Centre le contenu, limite sa largeur à 1440 px et garde des marges sur
+   les côtés. */
+.conteneur {
+  width: 100%;
+  max-width: var(--largeur-max);
+  margin-inline: auto;
+  padding-inline: var(--marge);
+}
+
+/* Grille de 4, 8 ou 12 colonnes selon l'écran (voir --colonnes dans base.css).
+   minmax(0, 1fr) : colonnes de largeur égale, qui ne débordent jamais même
+   si leur contenu est large. Utilisée par les sections à partir de l'étape 4. */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(var(--colonnes), minmax(0, 1fr));
+  gap: var(--gouttiere);
+}
+
+
+/* -------------------------------------------------------------------------
+   2. En-tête
+   ------------------------------------------------------------------------- */
+
+.en-tete {
+  /* Fond plein pour masquer le contenu qui passe dessous quand il reste
+     collé en haut (ordinateur, voir plus bas). */
+  background-color: var(--papier);
+  border-bottom: 2px solid var(--accent);
+}
+
+/* Mobile : nom sur une ligne, liens sur la suivante */
+.en-tete__interieur {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espace-1) var(--espace-3);
+  padding-block: var(--espace-2);
+}
+
+.en-tete__nom {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.en-tete__liens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-3);
+}
+
+.en-tete__liens a {
+  /* Zone cliquable d'au moins 24 px de haut, confortable au doigt */
+  display: inline-block;
+  padding-block: 0.375rem;
+  text-decoration: none;
+}
+
+/* Crochets [ ] autour des liens, ajoutés par le CSS pour ne pas encombrer le
+   HTML. Le texte après « / » est vide : les lecteurs d'écran ne lisent pas
+   les crochets. */
+.en-tete__liens a::before {
+  content: "[";
+  content: "[" / "";
+}
+
+.en-tete__liens a::after {
+  content: "]";
+  content: "]" / "";
+}
+
+.en-tete__liens a:hover,
+.en-tete__liens a:focus-visible {
+  text-decoration: underline;
+}
+
+/* Ordinateur : tout sur une ligne, et l'en-tête reste visible en haut de
+   l'écran pendant le défilement (position: sticky). */
+@media (min-width: 64em) {
+  .en-tete {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .en-tete__interieur {
+    padding-block: var(--espace-3);
+  }
+}
+
+
+/* -------------------------------------------------------------------------
+   3. Sections
+   ------------------------------------------------------------------------- */
+
+.section {
+  padding-block: var(--espace-section);
+}
+
+/* Le profil est la première section : moins d'espace au-dessus */
+.section--profil {
+  padding-top: var(--espace-8);
+}
+
+@media (min-width: 64em) {
+  /* Quand un lien de l'en-tête fait défiler la page, la section s'arrête
+     sous l'en-tête collé au lieu d'être cachée par lui. */
+  .section {
+    scroll-margin-top: 5rem;
+  }
+}
+
+/* Titre de section : petit libellé bleu suivi d'un filet qui occupe le reste
+   de la ligne (« 01 / PROJETS PRINCIPAUX ──────── »). */
+.section__titre {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-2);
+  margin-bottom: var(--espace-6);
+  color: var(--accent);
+}
+
+.section__titre::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--accent);
+}
+
+/* Nom en très grand dans le profil (mise en page complète à l'étape 4) */
+.profil__nom {
+  margin-block: var(--espace-3) var(--espace-4);
+  font-size: var(--taille-nom);
+  font-weight: 800;
+}
+
+/* Emplacement provisoire d'une section pas encore construite */
+.a-venir {
+  padding: var(--espace-4) var(--espace-3);
+  border: 1px dashed var(--bordure);
+  background-color: var(--blanc);
+  color: var(--gris);
+}
+
+
+/* -------------------------------------------------------------------------
+   4. Pied de page
+   ------------------------------------------------------------------------- */
+
+.pied {
+  /* Coupe le bas du nom géant, comme s'il sortait de la page */
+  overflow: hidden;
+}
+
+.pied__mentions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--espace-1) var(--espace-3);
+  padding-block: var(--espace-3);
+  border-top: 1px solid var(--encre);
+  color: var(--gris);
+}
+
+.pied__mentions a {
+  color: inherit;
+}
+
+/* Nom géant, purement décoratif (masqué aux lecteurs d'écran dans le HTML).
+   Sa taille suit la largeur de l'écran pour occuper toute la ligne :
+   « HAGUET » en Bricolage Grotesque très gras mesure environ 3,6 fois sa
+   taille de police, d'où la division par 3.65 (petite marge de sécurité).
+   min() choisit la plus petite des deux valeurs : au-delà de 1440 px de
+   large, le nom cesse de grandir, comme le reste du contenu. */
+.pied__nom {
+  max-width: none;
+  margin-bottom: -0.18em; /* coupe légèrement le bas des lettres */
+  font-family: var(--police-titres);
+  font-size: min(
+    calc((100vw - 2 * var(--marge)) / 3.65),
+    calc((var(--largeur-max) - 2 * var(--marge)) / 3.65)
+  );
+  font-weight: 800;
+  line-height: 0.8;
+  text-transform: uppercase;
+  white-space: nowrap;
+}

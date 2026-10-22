@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <!-- Adapte la page à la largeur de l'écran (indispensable sur mobile) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Alexandre Haguet · Portfolio</title>
+  <!-- Texte affiché sous le lien dans les résultats de recherche et les partages -->
+  <meta name="description" content="Alexandre Haguet, étudiant ingénieur en 5e année à l'ESILV, majeure Creative Technologies. Projets, parcours et contact. Recherche un stage de fin d'études de 6 mois à partir de mars 2027.">
+
+  <!-- Précharge les deux polices visibles en premier pour éviter un saut
+       d'affichage. « crossorigin » est obligatoire pour précharger une police. -->
+  <link rel="preload" href="fonts/bricolage-grotesque-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/instrument-sans-variable.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Ordre important : base.css définit les variables utilisées par layout.css -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+  <!-- Premier élément atteint avec la touche Tab : saute directement au contenu -->
+  <a class="lien-evitement libelle" href="#contenu">Aller au contenu</a>
+
+  <!-- ===================== En-tête ===================== -->
+  <header class="en-tete" id="haut">
+    <div class="conteneur en-tete__interieur">
+      <a class="en-tete__nom libelle" href="#profil">Alexandre Haguet</a>
+
+      <nav aria-label="Navigation principale">
+        <ul class="en-tete__liens" role="list">
+          <li><a class="libelle" href="#projets">Projets</a></li>
+          <li><a class="libelle" href="#parcours">Parcours</a></li>
+          <li><a class="libelle" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <!-- Étape 12 : la bascule FR / EN viendra ici -->
+    </div>
+  </header>
+
+  <main id="contenu">
+
+    <!-- ===================== 1. Mon profil (étape 4) ===================== -->
+    <section class="section section--profil" id="profil" aria-labelledby="titre-profil">
+      <div class="conteneur">
+        <p class="libelle">Portfolio · 2026</p>
+        <h1 class="profil__nom" id="titre-profil">Alexandre<br>Haguet</h1>
+        <p class="a-venir libelle">Accroche, statut et stage recherché : section à venir (étape 4)</p>
+      </div>
+    </section>
+
+    <!-- ===================== 2. Projets principaux (étapes 5a et 5b) ===================== -->
+    <section class="section" id="projets" aria-labelledby="titre-projets">
+      <div class="conteneur">
+        <!-- Le numéro est décoratif : masqué aux lecteurs d'écran -->
+        <h2 class="section__titre libelle" id="titre-projets"><span aria-hidden="true">01 /</span> Projets principaux</h2>
+        <p class="a-venir libelle">Loom Collection et OccluMap : section à venir (étape 5a)</p>
+      </div>
+    </section>
+
+    <!-- ===================== 3. Projets secondaires (étapes 6a et 6b) ===================== -->
+    <section class="section" id="autres-projets" aria-labelledby="titre-autres-projets">
+      <div class="conteneur">
+        <h2 class="section__titre libelle" id="titre-autres-projets"><span aria-hidden="true">02 /</span> Autres projets</h2>
+        <p class="a-venir libelle">Pétale (Kickstarter) et projets AICG : section à venir (étape 6a)</p>
+      </div>
+    </section>
+
+    <!-- ===================== 4. Parcours et formation (étape 7) ===================== -->
+    <section class="section" id="parcours" aria-labelledby="titre-parcours">
+      <div class="conteneur">
+        <h2 class="section__titre libelle" id="titre-parcours"><span aria-hidden="true">03 /</span> Parcours</h2>
+        <p class="a-venir libelle">Formation et expériences : section à venir (étape 7)</p>
+      </div>
+    </section>
+
+    <!-- ===================== 5. Contact et réseaux (étape 8) ===================== -->
+    <section class="section" id="contact" aria-labelledby="titre-contact">
+      <div class="conteneur">
+        <h2 class="section__titre libelle" id="titre-contact"><span aria-hidden="true">04 /</span> Contact</h2>
+        <p class="a-venir libelle">E-mail, LinkedIn, GitHub et CV : section à venir (étape 8)</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== Pied de page ===================== -->
+  <footer class="pied">
+    <div class="conteneur">
+      <div class="pied__mentions libelle">
+        <p>© 2026 Alexandre Haguet</p>
+        <p>Fait à la main en HTML et CSS</p>
+        <a href="#haut">Retour en haut <span aria-hidden="true">↑</span></a>
+      </div>
+      <!-- Nom géant décoratif : aria-hidden le cache aux lecteurs d'écran,
+           qui ont déjà lu le nom dans l'en-tête -->
+      <p class="pied__nom" aria-hidden="true">Haguet</p>
+    </div>
+  </footer>
+
+</body>
+</html>
