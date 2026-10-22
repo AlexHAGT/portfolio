@@ -1,0 +1,50 @@
+# Publication du portfolio sur GitHub Pages.
+#
+# À chaque « git push » sur la branche main, GitHub exécute ces étapes sur
+# ses propres serveurs : il récupère le dépôt, emballe UNIQUEMENT le dossier
+# site/ et le publie. Les autres dossiers (docs/, PLAN.md…) ne sont jamais
+# mis en ligne.
+#
+# Prérequis (une seule fois) : dans le dépôt sur github.com,
+# Settings > Pages > Build and deployment > Source : « GitHub Actions ».
+
+name: Publier le site
+
+on:
+  push:
+    branches: [main]
+  # Permet aussi de relancer la publication à la main depuis l'onglet Actions
+  workflow_dispatch:
+
+# Droits minimum nécessaires pour publier sur GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Si deux envois se suivent de près, une seule publication à la fois
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publication.outputs.page_url }}
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Préparer GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Emballer le dossier site/
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Publier
+        id: publication
+        uses: actions/deploy-pages@v4
