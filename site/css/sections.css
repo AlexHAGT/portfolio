@@ -48,6 +48,16 @@
   }
 }
 
+/* Badge surligné en jaune (« EN COURS », « KICKSTARTER »…).
+   L'information est écrite en toutes lettres : la couleur n'est qu'un
+   repère visuel en plus, jamais le seul moyen de la comprendre. */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--surligneur);
+  color: var(--encre);
+}
+
 /* Fiche « libellé / valeur » (inspirée des métadonnées de huyml).
    En HTML, c'est une liste de définitions : <dl> contient des paires
    <dt> (le libellé) / <dd> (la valeur), ce que les lecteurs d'écran
@@ -129,4 +139,134 @@
   flex-wrap: wrap;
   gap: var(--espace-2);
   margin-top: var(--espace-4);
+}
+
+
+/* -------------------------------------------------------------------------
+   3. Projets principaux
+   Les cartes sont créées par js/projets.js ; chaque carte (.projet) est une
+   grille de 4, 8 ou 12 colonnes (classe .grille).
+   ------------------------------------------------------------------------- */
+
+/* Grand espace entre les deux projets */
+.projets-liste {
+  display: grid;
+  row-gap: var(--espace-8);
+}
+
+@media (min-width: 64em) {
+  .projets-liste {
+    row-gap: var(--espace-section);
+  }
+}
+
+/* Mobile et tablette : en-tête, visuel puis détails, l'un sous l'autre */
+.projet {
+  row-gap: var(--espace-4);
+}
+
+.projet__entete,
+.projet__visuel,
+.projet__corps {
+  grid-column: 1 / -1;
+}
+
+/* Ordinateur : texte sur 5 colonnes, visuel sur 6, une colonne vide entre.
+   grid-row place l'en-tête sur la 1re ligne, les détails sur la 2e, et le
+   visuel sur les deux à la fois (span 2), à côté du texte. */
+@media (min-width: 64em) {
+  /* 1re ligne (en-tête) à sa hauteur naturelle ; si le visuel est plus haut
+     que le texte, la hauteur en trop va à la 2e ligne (1fr), sous les
+     détails, au lieu de creuser un vide entre le titre et la phrase. */
+  .projet {
+    grid-template-rows: auto 1fr;
+    row-gap: var(--espace-6);
+  }
+
+  .projet__entete {
+    grid-column: 1 / span 5;
+    grid-row: 1;
+  }
+
+  .projet__corps {
+    grid-column: 1 / span 5;
+    grid-row: 2;
+  }
+
+  .projet__visuel {
+    grid-column: 7 / -1;
+    grid-row: 1 / span 2;
+    align-self: start;
+  }
+
+  /* Un projet sur deux (le 2e, le 4e…) inverse les côtés pour donner du
+     rythme : visuel à gauche, texte à droite. */
+  .projet:nth-child(even) .projet__entete,
+  .projet:nth-child(even) .projet__corps {
+    grid-column: 8 / -1;
+  }
+
+  .projet:nth-child(even) .projet__visuel {
+    grid-column: 1 / span 6;
+  }
+}
+
+/* Très grand numéro (« 01 »), comme les projets numérotés de huyml */
+.projet__numero {
+  font-family: var(--police-titres);
+  font-size: var(--taille-numero);
+  font-weight: 800;
+  line-height: 0.8;
+}
+
+.projet__titre {
+  margin-top: var(--espace-2);
+  font-size: var(--taille-titre-projet);
+  font-weight: 800;
+}
+
+.projet__entete .badge {
+  margin-top: var(--espace-2);
+}
+
+.projet__phrase {
+  margin-bottom: var(--espace-4);
+  font-size: clamp(1.1875rem, 1rem + 0.5vw, 1.375rem); /* 19 → 22 px */
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.projet__liens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-2);
+  margin-top: var(--espace-4);
+}
+
+/* Visuel : image pleine largeur, bordée d'un filet comme une photo collée */
+.projet__cadre {
+  border: 1px solid var(--bordure);
+  background-color: var(--blanc);
+}
+
+.projet__cadre img {
+  width: 100%;
+}
+
+/* Variante pour une petite image : posée au centre d'un fond blanc, à sa
+   taille réelle (jamais agrandie, pour rester nette). */
+.projet__visuel--fond-blanc .projet__cadre {
+  display: flex;
+  justify-content: center;
+  padding: var(--espace-6) var(--espace-3);
+}
+
+.projet__visuel--fond-blanc .projet__cadre img {
+  width: auto;
+}
+
+.projet__legende {
+  margin-top: var(--espace-1);
+  color: var(--gris);
+  font-weight: 400;
 }

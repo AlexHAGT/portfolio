@@ -22,6 +22,12 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/sections.css">
+
+  <!-- Scripts. « defer » : ils s'exécutent une fois la page lue, dans l'ordre
+       où ils sont écrits. Les données doivent donc venir avant le script
+       qui les utilise. -->
+  <script src="data/projets.fr.js" defer></script>
+  <script src="js/projets.js" defer></script>
 </head>
 <body>
 
@@ -90,12 +96,20 @@
       </div>
     </section>
 
-    <!-- ===================== 2. Projets principaux (étapes 5a et 5b) ===================== -->
+    <!-- ===================== 2. Projets principaux ===================== -->
     <section class="section" id="projets" aria-labelledby="titre-projets">
       <div class="conteneur">
         <!-- Le numéro est décoratif : masqué aux lecteurs d'écran -->
         <h2 class="section__titre libelle" id="titre-projets"><span aria-hidden="true">01 /</span> Projets principaux</h2>
-        <p class="a-venir libelle">Loom Collection et OccluMap : section à venir (étape 5a)</p>
+
+        <!-- Les cartes sont créées ici par js/projets.js, à partir de
+             data/projets.fr.js. Ne rien écrire à la main dans ce bloc. -->
+        <div class="projets-liste" data-projets="principal"></div>
+
+        <!-- Affiché seulement si JavaScript est désactivé -->
+        <noscript>
+          <p class="a-venir libelle">Les projets s'affichent avec JavaScript. Activez-le pour les voir.</p>
+        </noscript>
       </div>
     </section>
 

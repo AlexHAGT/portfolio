@@ -84,9 +84,9 @@
      clamp(minimum, taille idéale, maximum) : la taille suit la largeur de
      l'écran (unité vw = 1 % de la largeur) sans jamais sortir des bornes.
      Minimum = mobile, maximum = grand écran. */
-  --taille-nom: clamp(3.5rem, 11vw, 10rem);          /* 56 → 160 px */
-  --taille-numero: clamp(6rem, 15vw, 13.75rem);      /* 96 → 220 px */
-  --taille-titre-projet: clamp(2.25rem, 5vw, 4.5rem); /* 36 → 72 px */
+  --taille-nom: clamp(3.5rem, 11vw, 12rem);           /* 56 → 192 px */
+  --taille-numero: clamp(6rem, 15vw, 15rem);          /* 96 → 240 px */
+  --taille-titre-projet: clamp(2.25rem, 5vw, 5.5rem); /* 36 → 88 px */
   --taille-texte: clamp(1.0625rem, 1vw + 0.8rem, 1.125rem); /* 17 → 18 px */
   --taille-libelle: 0.8125rem;                        /* 13 px */
 
@@ -103,7 +103,7 @@
   --colonnes: 4;
   --marge: 1.25rem;     /* 20 px */
   --gouttiere: 1rem;    /* 16 px */
-  --largeur-max: 90rem; /* 1440 px */
+  --largeur-max: 120rem; /* 1920 px : au-delà, le contenu reste centré */
 
   /* Côté d'un carreau du papier quadrillé */
   --carreau: 24px;
@@ -122,7 +122,8 @@
 @media (min-width: 64em) {
   :root {
     --colonnes: 12;
-    --marge: 3rem;      /* 48 px */
+    /* 48 px, puis grandit avec l'écran (4 % de sa largeur) jusqu'à 96 px */
+    --marge: clamp(3rem, 4vw, 6rem);
     --espace-section: 10rem; /* 160 px entre les sections */
   }
 }

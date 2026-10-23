@@ -60,9 +60,9 @@ Trois rôles, dont deux communs aux deux options :
 
 | Élément | Police | Taille | Style |
 |---|---|---|---|
-| Nom dans le profil | Titres | 56 → 160 px | Capitales, interligne serré |
-| Numéro de projet (`01`) | Titres | 96 → 220 px | |
-| Titre de projet | Titres | 36 → 72 px | Capitales |
+| Nom dans le profil | Titres | 56 → 192 px | Capitales, interligne serré |
+| Numéro de projet (`01`) | Titres | 96 → 240 px | |
+| Titre de projet | Titres | 36 → 88 px | Capitales |
 | Libellé de section (`01 / PROJETS PRINCIPAUX`) | Mono | 13 px | Capitales espacées, suivi d'un filet |
 | Texte courant | Instrument Sans | 17 → 18 px | Interligne 1,55, lignes de 65 caractères maximum |
 | Libellés et badges | Mono | 13 px | Capitales espacées |
@@ -77,9 +77,9 @@ Conçue d'abord pour mobile (règle du projet).
 |---|---|---|---|
 | Mobile (< 640 px) | 4 | 20 px | 16 px |
 | Tablette (640–1024 px) | 8 | 32 px | 24 px |
-| Ordinateur (> 1024 px) | 12 | 48 px | 24 px |
+| Ordinateur (> 1024 px) | 12 | 48 → 96 px (4 % de la largeur) | 24 px |
 
-- Largeur maximale du contenu : 1440 px (comme bermawy), centrée.
+- Largeur maximale du contenu : 1920 px, centrée (1440 px au départ, élargie le 23/10/2026 : sur grand écran, les marges paraissaient trop larges).
 - Espacements multiples de 8 px. Grand espace entre les sections (96 px sur mobile, 160 px sur ordinateur) :
   la page doit respirer.
 - Quadrillage du fond : carreaux de 24 px, très pâles. Cartes et listes sur fond blanc uni pour la lecture.
