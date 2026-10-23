@@ -248,6 +248,22 @@ a:hover {
 }
 
 
+/* Information manquante, à compléter par Alexandre : surlignée en jaune pour
+   qu'on ne puisse pas la rater (règle du projet : jamais d'information
+   inventée). box-decoration-break : le surlignage reste propre quand le
+   texte passe sur plusieurs lignes. */
+.a-completer {
+  padding: 0.05em 0.3em;
+  background-color: var(--surligneur);
+  color: var(--encre);
+  font-family: var(--police-mono);
+  font-size: 0.75em;
+  font-weight: 500;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+
 /* -------------------------------------------------------------------------
    6. Accessibilité
    ------------------------------------------------------------------------- */

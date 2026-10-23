@@ -7,7 +7,7 @@
 
   <title>Alexandre Haguet · Portfolio</title>
   <!-- Texte affiché sous le lien dans les résultats de recherche et les partages -->
-  <meta name="description" content="Alexandre Haguet, étudiant ingénieur en 5e année à l'ESILV, majeure Creative Technologies. Projets, parcours et contact. Recherche un stage de fin d'études de 6 mois à partir de mars 2027.">
+  <meta name="description" content="Alexandre Haguet, étudiant ingénieur en 5e année à l'ESILV, majeure Creative Technologies. Projets, parcours et contact. Recherche un stage de fin d'études de 5 à 6 mois à partir de mars 2027.">
 
   <!-- SITE EN CONSTRUCTION : demande aux moteurs de recherche de ne pas
        référencer la page. À RETIRER à l'étape 11 (mise en ligne définitive). -->
@@ -21,6 +21,7 @@
   <!-- Ordre important : base.css définit les variables utilisées par layout.css -->
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/sections.css">
 </head>
 <body>
 
@@ -45,12 +46,47 @@
 
   <main id="contenu">
 
-    <!-- ===================== 1. Mon profil (étape 4) ===================== -->
+    <!-- ===================== 1. Mon profil ===================== -->
     <section class="section section--profil" id="profil" aria-labelledby="titre-profil">
       <div class="conteneur">
         <p class="libelle">Portfolio · 2026</p>
         <h1 class="profil__nom" id="titre-profil">Alexandre<br>Haguet</h1>
-        <p class="a-venir libelle">Accroche, statut et stage recherché : section à venir (étape 4)</p>
+
+        <div class="grille profil__corps">
+          <!-- À gauche (sur ordinateur) : accroche et boutons -->
+          <div class="profil__texte">
+            <!-- Accroche tirée du CV 2026 d'Alexandre -->
+            <p class="profil__accroche">
+              À l'interface entre prototypage mécanique et électronique, systèmes embarqués et machine learning, je mène des projets de la conception à la validation.
+            </p>
+            <ul class="profil__actions" role="list">
+              <li><a class="bouton bouton--plein libelle" href="#contact">Me contacter <span aria-hidden="true">→</span></a></li>
+              <li><a class="bouton libelle" href="#projets">Voir les projets <span aria-hidden="true">↓</span></a></li>
+            </ul>
+          </div>
+
+          <!-- À droite (sur ordinateur) : l'essentiel en « libellé / valeur ».
+               Sources : docs/parcours.md (« Statut actuel ») et CV 2026 pour la
+               durée du stage et les secteurs. -->
+          <dl class="profil__fiche">
+            <div class="fiche__ligne">
+              <dt class="libelle">Statut</dt>
+              <dd>Étudiant ingénieur en 5e année à l'ESILV, majeure Creative Technologies</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">En parallèle</dt>
+              <dd>Master of Science in Creative Technology, Institute for Future Technologies</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Recherche</dt>
+              <dd>Stage de fin d'études de 5 à 6 mois, à partir de mars 2027</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Secteurs visés</dt>
+              <dd>Médical, défense, aéronautique et naval, énergie</dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </section>
 

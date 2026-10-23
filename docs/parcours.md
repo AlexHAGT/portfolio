@@ -5,9 +5,10 @@ chronologique), du plus récent au plus ancien.
 
 ## Statut actuel
 Étudiant en 5e année du cycle ingénieur à l'ESILV, majeure Creative Technologies.
-Recherche un **stage de fin d'études de 6 mois à partir de mars 2027**, de préférence
-dans un secteur à fort enjeu (défense, énergie, médical / pharmaceutique), sur des
-sujets d'innovation.
+Recherche un **stage de fin d'études de 5 à 6 mois à partir de mars 2027**, de préférence
+dans un secteur à fort enjeu (médical, défense, aéronautique / naval, énergie), pour
+contribuer à des projets d'ingénierie de la conception à la validation.
+(Durée et secteurs alignés sur le CV 2026, validé par Alexandre le 23/10/2026.)
 
 ## Formation
 

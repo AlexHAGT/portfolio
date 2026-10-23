@@ -139,13 +139,6 @@
   border-top: 1px solid var(--accent);
 }
 
-/* Nom en très grand dans le profil (mise en page complète à l'étape 4) */
-.profil__nom {
-  margin-block: var(--espace-3) var(--espace-4);
-  font-size: var(--taille-nom);
-  font-weight: 800;
-}
-
 /* Emplacement provisoire d'une section pas encore construite */
 .a-venir {
   padding: var(--espace-4) var(--espace-3);

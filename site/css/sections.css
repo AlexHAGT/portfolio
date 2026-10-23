@@ -1,0 +1,132 @@
+/* =========================================================================
+   sections.css — styles propres à chaque section de la page
+   Une partie par section, dans l'ordre de la page.
+   Les éléments réutilisables (boutons, fiche « libellé / valeur ») sont
+   regroupés au début.
+   ========================================================================= */
+
+
+/* -------------------------------------------------------------------------
+   1. Éléments réutilisables
+   ------------------------------------------------------------------------- */
+
+/* Bouton : en réalité un lien (<a>) habillé en bouton, puisqu'il mène à un
+   autre endroit de la page. Hauteur minimale de 44 px : facile à toucher
+   au doigt. */
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espace-1);
+  min-height: 2.75rem;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  /* Le fond et la couleur changent en douceur au survol */
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.bouton:hover {
+  background-color: var(--accent);
+  color: var(--papier);
+}
+
+/* Variante pleine, pour l'action principale */
+.bouton--plein {
+  background-color: var(--accent);
+  color: var(--papier);
+}
+
+.bouton--plein:hover {
+  border-color: var(--encre);
+  background-color: var(--encre);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bouton {
+    transition: none;
+  }
+}
+
+/* Fiche « libellé / valeur » (inspirée des métadonnées de huyml).
+   En HTML, c'est une liste de définitions : <dl> contient des paires
+   <dt> (le libellé) / <dd> (la valeur), ce que les lecteurs d'écran
+   annoncent correctement. Chaque paire est enveloppée dans un <div>
+   pour pouvoir tracer un filet entre les lignes. */
+.fiche__ligne {
+  display: grid;
+  gap: 0.125rem;
+  padding-block: 0.75rem;
+  border-top: 1px solid var(--bordure);
+}
+
+.fiche__ligne:last-child {
+  border-bottom: 1px solid var(--bordure);
+}
+
+.fiche__ligne dt {
+  color: var(--gris);
+}
+
+/* À partir de la tablette : libellé à gauche, valeur à droite */
+@media (min-width: 40em) {
+  .fiche__ligne {
+    grid-template-columns: 9rem 1fr;
+    gap: var(--espace-2);
+  }
+
+  /* Aligne le petit libellé sur la première ligne du texte de la valeur */
+  .fiche__ligne dt {
+    padding-top: 0.2em;
+  }
+}
+
+
+/* -------------------------------------------------------------------------
+   2. Mon profil
+   ------------------------------------------------------------------------- */
+
+/* Nom en très grand : la première impression */
+.profil__nom {
+  margin-block: var(--espace-3) var(--espace-6);
+  font-size: var(--taille-nom);
+  font-weight: 800;
+}
+
+/* Mobile : accroche puis fiche, l'une sous l'autre (chaque bloc occupe
+   toutes les colonnes : de la première, 1, à la dernière, -1). */
+.profil__texte,
+.profil__fiche {
+  grid-column: 1 / -1;
+}
+
+.profil__corps {
+  row-gap: var(--espace-6);
+}
+
+/* Ordinateur : accroche sur les colonnes 1 à 6, fiche sur les colonnes 8 à 12
+   (la colonne 7 reste vide pour aérer). */
+@media (min-width: 64em) {
+  .profil__texte {
+    grid-column: 1 / span 6;
+  }
+
+  .profil__fiche {
+    grid-column: 8 / -1;
+  }
+}
+
+/* Phrase d'accroche : plus grande que le texte courant, lignes courtes */
+.profil__accroche {
+  max-width: 32ch;
+  font-size: clamp(1.375rem, 1rem + 1.2vw, 2rem); /* 22 → 32 px */
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.profil__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-2);
+  margin-top: var(--espace-4);
+}
