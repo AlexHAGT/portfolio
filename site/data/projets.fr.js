@@ -2,7 +2,8 @@
    projets.fr.js — LES PROJETS DU PORTFOLIO (version française)
 
    C'est le seul fichier à modifier pour ajouter, retirer ou corriger un
-   projet : le script js/projets.js fabrique les cartes à partir d'ici.
+   projet : le script js/projets.js fabrique les cartes et les fenêtres de
+   détail à partir d'ici.
    Source des textes : les fiches de docs/projets/ (seule source de vérité).
 
    Règles d'écriture :
@@ -12,7 +13,8 @@
    - une ligne qui commence par // est un commentaire, ignoré par le site.
 
    Champs d'un projet :
-   - id         : identifiant court, sans espace ni accent (sert aux liens) ;
+   - id         : identifiant court, sans espace ni accent. Sert aussi
+                  d'adresse directe de la fenêtre de détail (…/portfolio/#loom) ;
    - categorie  : "principal" (grande carte) ou "secondaire" (carte compacte,
                   étape 6a) ;
    - visible    : true pour afficher le projet, false pour le cacher ;
@@ -21,12 +23,31 @@
    - phrase     : le projet en une phrase ;
    - fiche      : lignes « libellé / valeur », dans l'ordre d'affichage ;
    - image      : visuel principal (voir le détail sur le premier projet) ;
-   - liens      : boutons sous la fiche, [] pour aucun.
+   - liens      : boutons sous la fiche, [] pour aucun ;
+   - detail     : contenu de la fenêtre « Voir le projet », ou null pour ne
+                  pas proposer de fenêtre.
+
+   Contenu de « detail » :
+   - mention  : phrase d'avertissement affichée sous la fiche, ou null ;
+   - sections : liste de { titre, blocs }. Chaque bloc a un « type » :
+       { type: "paragraphe", texte: "..." }
+       { type: "liste", elements: ["...", "..."] }
+       { type: "chiffres", elements: [{ valeur, texte, source }] }
+           chiffres clés affichés en grand, avec leur source
+       { type: "etapes", elements: ["...", "..."] }
+           étapes numérotées ; un élément peut aussi être { titre, texte }
+       { type: "cartes", elements: [{ titre, badge, texte, liste }] }
+           petits encadrés côte à côte (badge, texte et liste facultatifs)
+       { type: "schema", blocs: [{ titre, sousTitre, lignes }], liaisons: ["..."] }
+           blocs reliés par des flèches ; liaisons[0] est écrit sur la
+           flèche entre le 1er et le 2e bloc, etc.
+       { type: "image", image: { même format que le champ « image » } }
+       { type: "sources", elements: [{ texte, url }] }
    ========================================================================= */
 
 const PROJETS = [
 
-  // ---------------------------------------------------------------- Loom
+  // ===================================================================== Loom
   {
     id: "loom",
     categorie: "principal",
@@ -61,9 +82,182 @@ const PROJETS = [
     liens: [
       { texte: "Voir le code", url: "https://github.com/Alexlp05/Loom" },
     ],
+    detail: {
+      mention: null,
+      sections: [
+        {
+          titre: "Le problème",
+          blocs: [
+            {
+              type: "chiffres",
+              elements: [
+                { valeur: "25 %", texte: "des personnes âgées sont socialement isolées", source: "OMS" },
+                { valeur: "50 %", texte: "des Françaises de plus de 75 ans sont veuves", source: "INED" },
+              ],
+            },
+            { type: "paragraphe", texte: "L'isolement est un facteur majeur de mortalité prématurée (Holt-Lunstad, 2015). Les smartphones et tablettes conviennent mal aux seniors : interfaces complexes, trop de menus, manque de confiance. Les assistants vocaux lèvent la barrière physique, mais restent sources de malentendus et de craintes pour la vie privée." },
+          ],
+        },
+        {
+          titre: "L'idée",
+          blocs: [
+            { type: "paragraphe", texte: "Des projets comme KOMP et Yayagram montrent qu'une technologie est adoptée quand elle se loge dans un objet simple et familier. Notre parti pris : IA générative, objet familier et interaction minimale." },
+            {
+              type: "cartes",
+              elements: [
+                { titre: "The Teller", badge: "Prototypé", texte: "Téléphone GPO 746 : recueille les récits de vie et construit une frise chronologique pour la famille." },
+                { titre: "The Tuner", badge: "Concept", texte: "Radio vintage : actualités et stimulation cognitive." },
+                { titre: "The Imprint", badge: "Concept", texte: "Machine à écrire vintage : imprime les souvenirs sous forme d'histoires illustrées." },
+              ],
+            },
+          ],
+        },
+        {
+          titre: "Comment ça marche",
+          blocs: [
+            {
+              type: "etapes",
+              elements: [
+                "On décroche le combiné : la conversation démarre automatiquement.",
+                "L'IA pose des questions sur la vie : souvenirs, anecdotes, grandes étapes.",
+                "Les récits sont transcrits, puis résumés et stockés par l'IA.",
+                "La famille consulte « l'arbre de vie », une frise chronologique dans une application web.",
+              ],
+            },
+            { type: "paragraphe", texte: "Aucune courbe d'apprentissage : décrocher suffit." },
+            {
+              type: "image",
+              image: {
+                fichier: "img/loom/loom-frise",
+                largeurs: [680],
+                dimensions: [680, 601],
+                alt: "Capture de l'application web : une frise chronologique verticale de souvenirs, chacun avec un titre, une année approximative et le début du récit.",
+                legende: "La frise des souvenirs consultée par la famille",
+                surFondBlanc: true,
+              },
+            },
+          ],
+        },
+        {
+          titre: "Sous le capot",
+          blocs: [
+            {
+              type: "schema",
+              blocs: [
+                {
+                  titre: "Client",
+                  sousTitre: "Raspberry Pi 5 dans le téléphone",
+                  lignes: [
+                    "Détecte le décroché (commutateur de crochet sur les GPIO)",
+                    "Capte la voix par le micro du combiné",
+                    "Joue la réponse de l'IA dans l'écouteur",
+                  ],
+                },
+                {
+                  titre: "Serveur",
+                  sousTitre: "PC local",
+                  lignes: [
+                    "Reconnaissance vocale : Faster-Whisper",
+                    "Modèle de langage : Ollama + Mistral",
+                    "Synthèse vocale : Kokoro",
+                    "Application web : frise + SQLite",
+                  ],
+                },
+              ],
+              liaisons: ["WebSocket"],
+            },
+            { type: "paragraphe", texte: "Tout le traitement reste en local : aucune donnée n'est envoyée dans le cloud, ce qui protège la vie privée." },
+            {
+              type: "image",
+              image: {
+                fichier: "img/loom/loom-interieur",
+                largeurs: [331],
+                dimensions: [331, 589],
+                alt: "Le téléphone ouvert : le Raspberry Pi 5 dans son boîtier, les câbles du combiné et une pièce de fixation orange.",
+                legende: "L'intérieur du Teller",
+                surFondBlanc: true,
+              },
+            },
+          ],
+        },
+        {
+          titre: "Test et recherche",
+          blocs: [
+            { type: "paragraphe", texte: "Le prototype a été testé avec des personnes âgées." },
+            {
+              type: "cartes",
+              elements: [
+                {
+                  titre: "Retours positifs",
+                  liste: [
+                    "Interaction avec le combiné jugée instinctive et pratique",
+                    "Les questions de l'IA guident naturellement la conversation",
+                    "Le principe d'un objet familier est bien reçu",
+                    "Partager ses souvenirs à distance avec ses petits-enfants est apprécié",
+                  ],
+                },
+                {
+                  titre: "Réserves",
+                  liste: [
+                    "Risque de remplacer les vraies interactions avec les petits-enfants",
+                    "Design de l'application web à améliorer",
+                    "Usage quotidien à long terme non vérifié",
+                  ],
+                },
+              ],
+            },
+            { type: "paragraphe", texte: "Nous avons aussi reproduit l'étude de Pradhan et al. (2020) sur les personnes âgées et Alexa : 5 seniors en France, en sessions de 15 à 20 minutes (discussion, démonstration, test guidé, test libre, retours)." },
+            {
+              type: "liste",
+              elements: [
+                "Confirmé : la voix paraît plus simple que les menus d'un smartphone, et la recherche d'information est l'usage le plus spontané.",
+                "Nouveau : difficulté à savoir quoi demander sans être guidé, méfiance envers la voix de synthèse.",
+                "Limite : sessions courtes, aucune conclusion possible sur l'adoption à long terme.",
+              ],
+            },
+          ],
+        },
+        {
+          titre: "Bilan",
+          blocs: [
+            {
+              type: "cartes",
+              elements: [
+                {
+                  titre: "Forces",
+                  liste: [
+                    "Prototype fonctionnel de bout en bout",
+                    "Interaction sans apprentissage",
+                    "Confidentialité : traitement local",
+                    "Valeur sociale",
+                  ],
+                },
+                {
+                  titre: "Limites",
+                  liste: [
+                    "Dépend d'un PC à proximité : pas encore autonome",
+                    "La latence du modèle de langage peut casser le rythme de la conversation",
+                    "Voix encore un peu robotique",
+                    "Design de l'application web perfectible",
+                  ],
+                },
+                {
+                  titre: "Suites envisagées",
+                  liste: [
+                    "Études en interaction humain-machine : téléphone rétro face à une enceinte, styles de relance de l'IA",
+                    "Étude de 3 mois en EHPAD sur l'impact cognitif et social",
+                    "Un Teller autonome, avec un pilote prévu dans 3 EHPAD",
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   },
 
-  // ---------------------------------------------------------------- OccluMap
+  // ===================================================================== OccluMap
   {
     id: "occlumap",
     categorie: "principal",
@@ -89,6 +283,133 @@ const PROJETS = [
       surFondBlanc: false,
     },
     liens: [],
+    detail: {
+      // Fiche du projet : ne pas le présenter comme un dispositif médical
+      mention: "Prototype de recherche : ce n'est pas un dispositif médical, et il n'est pas utilisé pour des décisions cliniques.",
+      sections: [
+        {
+          titre: "Le problème",
+          blocs: [
+            { type: "paragraphe", texte: "Quand un patient a des dents usées, ou des dents qui ont « poussé » faute de dent en face, le dentiste doit rétablir un plan d'occlusion régulier : la surface où les dents du haut et du bas se rencontrent." },
+            { type: "paragraphe", texte: "Pour décider quelles dents réduire et lesquelles rehausser, il commande souvent une maquette des futures dents au prothésiste, le wax-up. C'est un aller-retour qui prend du temps, avec une décision qui repose beaucoup sur l'œil du praticien." },
+          ],
+        },
+        {
+          titre: "La solution",
+          blocs: [
+            {
+              type: "etapes",
+              elements: [
+                "Entrée : deux fichiers STL exportés par un scanner intra-oral (arcades du haut et du bas, en occlusion).",
+                "Détection des cuspides, les sommets des dents, par apprentissage automatique, avec sélection manuelle en secours.",
+                "Ajustement robuste d'une surface de référence, la sphère de Monson : les dents trop hautes ou trop basses sont écartées du calcul au lieu de le fausser.",
+                "Carte signée : distance de chaque point de la surface dentaire à la référence.",
+                "Sortie : vue 3D en couleurs (rouge = à réduire, bleu = à rehausser), tableau par dent et réglages en direct.",
+              ],
+            },
+            { type: "paragraphe", texte: "Tout le traitement est local : aucun scan ne quitte l'ordinateur, car ce sont des données de santé." },
+            {
+              type: "image",
+              image: {
+                fichier: "img/occlumap/occlumap-maquette",
+                largeurs: [800, 1600],
+                dimensions: [1672, 941],
+                alt: "Maquette de l'interface d'OccluMap : vue de dessus d'une arcade dentaire, les dents à réduire en rouge et celles à rehausser en bleu, des réglages à gauche et un tableau par dent en dessous.",
+                legende: "Maquette conceptuelle générée par IA, valeurs fictives",
+                surFondBlanc: false,
+              },
+            },
+            { type: "paragraphe", texte: "Vision à long terme : afficher cette analyse directement pendant la prise d'empreinte, comme les caméras intra-orales affichent déjà la carte des contacts entre arcades." },
+            {
+              type: "image",
+              image: {
+                fichier: "img/occlumap/occlumap-carte-contacts",
+                largeurs: [530],
+                dimensions: [530, 295],
+                alt: "Logiciel d'un scanner intra-oral : une arcade dentaire en 3D, avec des zones colorées du bleu au rouge là où les dents du haut et du bas se touchent.",
+                legende: "Carte des contacts entre arcades dans le logiciel d'un scanner intra-oral (capture d'un chirurgien-dentiste)",
+                surFondBlanc: true,
+              },
+            },
+          ],
+        },
+        {
+          titre: "Ce qui le rend original",
+          blocs: [
+            { type: "paragraphe", texte: "Les briques existent séparément dans la littérature et dans des produits du marché. OccluMap les combine : à partir du seul fichier STL, avant le wax-up, robuste aux dents usées, avec une décision par dent. L'outil sera ensuite comparé au jugement de praticiens, et l'accord entre praticiens mesuré, ce qu'aucune étude trouvée ne mesure." },
+            {
+              type: "image",
+              image: {
+                fichier: "img/occlumap/occlumap-etat-de-l-art",
+                largeurs: [800, 1160],
+                dimensions: [1160, 752],
+                alt: "Tableau Miro de l'état de l'art : 25 articles, brevets et produits répartis en 5 thèmes autour du projet.",
+                legende: "État de l'art : 25 travaux, articles et brevets, cartographiés en 5 thèmes",
+                surFondBlanc: false,
+              },
+            },
+          ],
+        },
+        {
+          titre: "Volet recherche",
+          blocs: [
+            { type: "paragraphe", texte: "Question : l'outil désigne-t-il les dents à réduire ou à rehausser aussi bien qu'un praticien ?" },
+            { type: "paragraphe", texte: "Méthode prévue : une étude pilote sur une vingtaine de cas anonymisés. Le partenaire clinique et 2 ou 3 praticiens classent chaque dent sans voir la carte ; on compare ensuite les praticiens entre eux et avec l'outil (taux d'accord, coefficient kappa). Objectif : un article co-signé avec le partenaire clinique." },
+            {
+              type: "image",
+              image: {
+                fichier: "img/occlumap/occlumap-scan-wen-2025",
+                largeurs: [800, 968],
+                dimensions: [968, 690],
+                alt: "Modèle numérique issu d'un scan intra-oral : les deux arcades dentaires vues de dessus, de face et de côté.",
+                // Licence CC BY 4.0 : citer la source (règle du projet)
+                legende: "Modèle numérique issu d'un scan intra-oral. Figure de Wen et al., Clin Exp Dent Res 2025, licence CC BY 4.0",
+                surFondBlanc: false,
+              },
+            },
+            {
+              type: "sources",
+              elements: [
+                { texte: "Wen et al. 2025, Clin Exp Dent Res : sphère de Monson calculée à partir de scans intra-oraux", url: "https://doi.org/10.1002/cre2.70063" },
+                { texte: "Ma et al. 2026, AJODO : détection automatique des repères dentaires par apprentissage profond", url: "https://doi.org/10.1016/j.ajodo.2025.09.009" },
+              ],
+            },
+          ],
+        },
+        {
+          titre: "Planning",
+          blocs: [
+            {
+              type: "etapes",
+              elements: [
+                { titre: "Octobre 2026", texte: "Environnement, données, affichage des STL, sélection manuelle des cuspides, ajustement de la sphère" },
+                { titre: "20 novembre 2026", texte: "Jalon : démo minimale complète (carte signée et tableau par dent)" },
+                { titre: "Décembre 2026", texte: "Réglages interactifs, mode « référence imposée », détection automatique des cuspides" },
+                { titre: "Janvier 2027", texte: "Évaluation avec les praticiens, analyse, soutenance" },
+              ],
+            },
+          ],
+        },
+        {
+          titre: "Mon rôle",
+          blocs: [
+            { type: "paragraphe", texte: "Conception du projet, état de l'art, développement du prototype (géométrie 3D, interface, apprentissage automatique), protocole d'évaluation et pilotage. Je m'appuie sur mon stage chez SEGULA Technologies : une application de bureau en Python, validée par le client, sous contrainte stricte de confidentialité des données." },
+            { type: "paragraphe", texte: "Le projet est mené avec Pierre, étudiant en dernière année de chirurgie dentaire à Sorbonne Université, en clinique à l'hôpital Charles-Foix. Nous avions l'idée d'un projet commun depuis nos études de santé : j'ai fait une année de PASS avant l'école d'ingénieurs. Référente : Xiao Xiao (IFT / ESILV)." },
+            {
+              type: "liste",
+              elements: [
+                "Traitement de données 3D",
+                "Apprentissage automatique appliqué à la santé",
+                "Développement d'application de bureau",
+                "Démarche de recherche : état de l'art, protocole, évaluation",
+                "Collaboration avec un partenaire clinique",
+                "Protection des données de santé",
+              ],
+            },
+          ],
+        },
+      ],
+    },
   },
 
 ];

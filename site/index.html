@@ -153,5 +153,23 @@
     </div>
   </footer>
 
+  <!-- ===================== Fenêtre de détail d'un projet =====================
+       Élément <dialog> : une fenêtre native du navigateur, ouverte par
+       js/projets.js au clic sur « Voir le projet ». Son contenu est rempli
+       à partir de data/projets.fr.js. aria-labelledby donne son nom à la
+       fenêtre (le titre du projet) pour les lecteurs d'écran. -->
+  <dialog class="fenetre" id="fenetre-projet" aria-labelledby="fenetre-titre">
+    <div class="fenetre__barre">
+      <div class="conteneur fenetre__barre-interieur">
+        <p class="libelle" data-fenetre-numero></p>
+        <!-- autofocus : le clavier arrive sur ce bouton à l'ouverture -->
+        <button class="bouton libelle" type="button" data-fermer autofocus>
+          Fermer <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+    </div>
+    <div class="conteneur grille fenetre__contenu" data-fenetre-contenu></div>
+  </dialog>
+
 </body>
 </html>

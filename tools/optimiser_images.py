@@ -31,8 +31,15 @@ QUALITE = 82
 # (fichier original dans assets/, fichier de sortie dans site/img/ sans extension)
 # Le nom de sortie est sans espaces ni accents, pour des adresses web propres.
 IMAGES = [
+    # Cartes des projets principaux (étape 5a)
     ("Loom/user_holding_phone.jpeg", "loom/loom-test-utilisateur"),
     ("OccluMap/OccluMap maquette de l'interface généré par IA.png", "occlumap/occlumap-maquette"),
+    # Vues détaillées (étape 5b)
+    ("Loom/timeline_UI.png", "loom/loom-frise"),
+    ("Loom/phone_open.png", "loom/loom-interieur"),
+    ("OccluMap/Contact map between the arches in the intraoral scanner software.png", "occlumap/occlumap-carte-contacts"),
+    ("OccluMap/Tableau Miro.png", "occlumap/occlumap-etat-de-l-art"),
+    ("OccluMap/Digital intraoral scanning model from Wen et al., Clin Exp Dent Res 2025.jpg", "occlumap/occlumap-scan-wen-2025"),
 ]
 
 

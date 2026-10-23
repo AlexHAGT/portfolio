@@ -243,30 +243,278 @@
   margin-top: var(--espace-4);
 }
 
-/* Visuel : image pleine largeur, bordée d'un filet comme une photo collée */
-.projet__cadre {
+/* Visuel (cartes et fenêtre de détail) : image pleine largeur, bordée d'un
+   filet comme une photo collée */
+.visuel__cadre {
   border: 1px solid var(--bordure);
   background-color: var(--blanc);
 }
 
-.projet__cadre img {
+.visuel__cadre img {
   width: 100%;
 }
 
 /* Variante pour une petite image : posée au centre d'un fond blanc, à sa
    taille réelle (jamais agrandie, pour rester nette). */
-.projet__visuel--fond-blanc .projet__cadre {
+.visuel--fond-blanc .visuel__cadre {
   display: flex;
   justify-content: center;
   padding: var(--espace-6) var(--espace-3);
 }
 
-.projet__visuel--fond-blanc .projet__cadre img {
+.visuel--fond-blanc .visuel__cadre img {
   width: auto;
 }
 
-.projet__legende {
+.visuel__legende {
   margin-top: var(--espace-1);
   color: var(--gris);
   font-weight: 400;
+}
+
+
+/* -------------------------------------------------------------------------
+   4. Fenêtre de détail d'un projet (<dialog>, remplie par js/projets.js)
+   ------------------------------------------------------------------------- */
+
+/* La fenêtre occupe tout l'écran et défile seule. Le navigateur donne par
+   défaut une petite boîte centrée avec une bordure : on annule tout cela. */
+.fenetre {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0 0 var(--espace-section);
+  border: 0;
+  overflow-y: auto;
+  color: var(--encre);
+  /* Même papier quadrillé que la page (voir body dans base.css) */
+  background-color: var(--papier);
+  background-image:
+    linear-gradient(to right, var(--quadrillage) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--quadrillage) 1px, transparent 1px);
+  background-size: var(--carreau) var(--carreau);
+}
+
+/* Voile derrière la fenêtre, visible un instant à l'ouverture */
+.fenetre::backdrop {
+  background-color: rgb(21 21 21 / 0.4);
+}
+
+/* Pendant que la fenêtre est ouverte, la page derrière ne défile plus.
+   :has() : « la page qui contient une fenêtre ouverte ». */
+html:has(.fenetre[open]) {
+  overflow: hidden;
+}
+
+/* Barre du haut, toujours visible : numéro du projet et bouton Fermer */
+.fenetre__barre {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--papier);
+  border-bottom: 2px solid var(--accent);
+}
+
+.fenetre__barre-interieur {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espace-2);
+  padding-block: var(--espace-2);
+  color: var(--accent);
+}
+
+.fenetre__contenu {
+  padding-top: var(--espace-6);
+  row-gap: var(--espace-8);
+}
+
+/* Mobile : résumé puis sections ; ordinateur : résumé sur 4 colonnes à
+   gauche, sections sur 7 colonnes à droite (comme la vue projet de huyml). */
+.detail__resume,
+.detail__sections {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 64em) {
+  .detail__resume {
+    grid-column: 1 / span 4;
+  }
+
+  .detail__sections {
+    grid-column: 6 / -1;
+  }
+}
+
+.detail__resume .badge {
+  margin-top: var(--espace-2);
+}
+
+.detail__resume .projet__phrase {
+  margin-top: var(--espace-3);
+}
+
+/* Avertissement (ex. « ce n'est pas un dispositif médical ») */
+.detail__mention {
+  margin-top: var(--espace-3);
+  padding: var(--espace-2);
+  border-left: 3px solid var(--accent);
+  background-color: var(--blanc);
+  font-size: 0.9375rem;
+}
+
+/* Espacements : grand espace entre les sections, plus petit entre les blocs */
+.detail__section + .detail__section {
+  margin-top: var(--espace-section);
+}
+
+.detail__section .section__titre {
+  margin-bottom: var(--espace-4);
+}
+
+.detail__section > * + * {
+  margin-top: var(--espace-4);
+}
+
+/* Listes à puces, puces de la couleur d'accent */
+.detail__liste {
+  padding-left: 1.25em;
+}
+
+.detail__liste li + li {
+  margin-top: 0.4em;
+}
+
+.detail__liste li::marker {
+  color: var(--accent);
+}
+
+/* Chiffres clés : autant de colonnes que la place le permet (14rem minimum
+   chacune), sans media query */
+.detail__chiffres {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--espace-4);
+}
+
+.chiffre {
+  padding-top: var(--espace-2);
+  border-top: 1px solid var(--encre);
+}
+
+.chiffre__valeur {
+  font-family: var(--police-titres);
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.chiffre__texte {
+  margin-top: var(--espace-1);
+}
+
+.chiffre__source {
+  margin-top: var(--espace-1);
+  color: var(--gris);
+  font-weight: 400;
+}
+
+/* Étapes numérotées : numéro bleu à gauche, texte à droite */
+.detail__etapes {
+  display: grid;
+  gap: var(--espace-2);
+}
+
+.etape {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: var(--espace-2);
+  padding-top: var(--espace-2);
+  border-top: 1px solid var(--bordure);
+}
+
+.etape__numero {
+  font-family: var(--police-titres);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.etape__titre {
+  margin-bottom: 0.25rem;
+  color: var(--accent);
+}
+
+/* Petits encadrés côte à côte (gamme d'objets, forces / limites…) */
+.detail__cartes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--espace-2);
+}
+
+.mini-carte {
+  padding: var(--espace-3);
+  border: 1px solid var(--bordure);
+  background-color: var(--blanc);
+}
+
+.mini-carte > * + * {
+  margin-top: var(--espace-2);
+}
+
+.mini-carte__titre {
+  font-family: var(--police-titres);
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+/* Schéma d'architecture : blocs l'un sous l'autre sur mobile, côte à côte
+   à partir de la tablette avec la liaison au milieu */
+.detail__schema {
+  display: grid;
+  gap: var(--espace-2);
+}
+
+@media (min-width: 40em) {
+  .detail__schema {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+}
+
+.schema__bloc {
+  height: 100%;
+  padding: var(--espace-3);
+  border: 1px solid var(--encre);
+  background-color: var(--blanc);
+}
+
+.schema__titre {
+  color: var(--accent);
+}
+
+.schema__sous-titre {
+  margin-block: 0.25rem var(--espace-2);
+  font-weight: 600;
+}
+
+.schema__liaison {
+  text-align: center;
+  color: var(--accent);
+}
+
+/* Sources en bas de section */
+.detail__sources {
+  padding-top: var(--espace-2);
+  border-top: 1px solid var(--bordure);
+}
+
+.detail__sources .detail__liste {
+  margin-top: var(--espace-1);
+  font-size: 0.9375rem;
 }
