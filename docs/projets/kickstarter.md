@@ -19,6 +19,9 @@ donner la forme souhaitée, lancé et financé via une campagne Kickstarter.
 ## Contexte
  cadre du projet (cours) objectif de faire un quickstarter, c'est à dire un produit de production rapide avec une campgne courte de 20 jours 
 
+- Cours : « Quickstarter ». (précisé le 13/11/2026)
+- Équipe : groupe de 4 étudiants. (précisé le 13/11/2026)
+
 
 ## Le produit
 - Abat-jour modulable : les éléments en acrylique s'agencent pour adapter la forme de la lampe.
@@ -43,10 +46,14 @@ Lancée au format **Quickstarter** (campagne courte et à petit objectif), caté
 
 L'envoi aux contributeurs était annoncé pour décembre, avec une prise en charge du
 service après-vente (pièces de remplacement, ou lampe complète si nécessaire).
+Livraison prévue de fin novembre à décembre 2026 (précisé le 13/11/2026 ; la frise de
+campagne `timeline .png`, qui annonçait août puis novembre, n'est plus à jour).
 
 ## Mon rôle
  créateur du projet conception produit,
  visuels de campagne, rédaction, gestion des contributeurs, logistique
+
+- Au sein du groupe de 4, Alexandre a contribué à toutes ces tâches. (précisé le 13/11/2026)
 
 ## Compétences et outils
  CAO, découpe laser, design produit, communication, gestion de projet,

@@ -40,6 +40,11 @@ IMAGES = [
     ("OccluMap/Contact map between the arches in the intraoral scanner software.png", "occlumap/occlumap-carte-contacts"),
     ("OccluMap/Tableau Miro.png", "occlumap/occlumap-etat-de-l-art"),
     ("OccluMap/Digital intraoral scanning model from Wen et al., Clin Exp Dent Res 2025.jpg", "occlumap/occlumap-scan-wen-2025"),
+    # Projets secondaires (étape 6a). La frise « timeline .png » est écartée :
+    # ses dates de livraison ne sont plus à jour.
+    ("kickstarter/photo lampe.jpeg", "petale/petale-lampe"),
+    ("kickstarter/photo lampe2.jpeg", "petale/petale-lampe-2"),
+    ("kickstarter/pieces lampes.png", "petale/petale-pieces"),
 ]
 
 

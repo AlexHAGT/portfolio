@@ -274,6 +274,237 @@
 
 
 /* -------------------------------------------------------------------------
+   3b. Projets secondaires (cartes compactes créées par js/projets.js)
+   ------------------------------------------------------------------------- */
+
+/* 1 colonne sur mobile, 2 à partir de la tablette, 3 sur ordinateur s'il
+   y a au moins 3 cartes. :has(> :nth-child(3)) se lit « la liste qui a un
+   3e enfant » : la mise en page s'adapte seule quand on affiche le stage. */
+.cartes-liste {
+  display: grid;
+  gap: var(--gouttiere);
+}
+
+/* minmax(0, 1fr) : colonnes toujours égales, même si un long mot du titre
+   voudrait en élargir une (1fr seul laisse le contenu imposer sa largeur). */
+@media (min-width: 40em) {
+  .cartes-liste {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64em) {
+  .cartes-liste:has(> :nth-child(3)) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Carte blanche. position: relative sert de repère au bouton étiré
+   (voir .carte__bouton::after). */
+.carte {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--bordure);
+  background-color: var(--blanc);
+  transition: border-color 0.15s;
+}
+
+.carte:hover {
+  border-color: var(--encre);
+}
+
+/* Visuel en haut, au format 3:2 au minimum. Si l'aperçu de démo a besoin
+   de plus de hauteur (écran étroit), il s'agrandit au lieu d'être coupé.
+   Dans une rangée, les cartes ont la même hauteur : flex-grow donne la
+   hauteur en trop au visuel, pour que les textes des cartes voisines
+   commencent au même niveau. */
+.carte__visuel {
+  display: grid;
+  aspect-ratio: 3 / 2;
+  flex: 1 0 auto;
+  border-bottom: 1px solid var(--bordure);
+}
+
+/* La photo remplit tout le cadre ; object-fit: cover la recadre si besoin,
+   sans la déformer. position: absolute : la photo suit la taille du cadre
+   au lieu de l'imposer. */
+.carte__visuel .visuel__cadre {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+}
+
+.carte__visuel img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* margin-top: auto (sur le bouton) le pousse en bas du corps */
+.carte__corps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espace-2);
+  padding: var(--espace-3);
+}
+
+/* hyphens: auto : un mot trop long pour la carte est coupé avec un tiret,
+   selon les règles du français (lang="fr" dans index.html) ;
+   overflow-wrap : sécurité si le navigateur ne sait pas couper les mots. */
+.carte__titre {
+  font-size: clamp(2rem, 1.4rem + 2vw, 3.25rem); /* 32 → 52 px */
+  font-weight: 800;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+/* Cartes plus étroites quand il y en a 3 par rangée : titres plus petits */
+@media (min-width: 64em) {
+  .cartes-liste:has(> :nth-child(3)) .carte__titre {
+    font-size: clamp(1.75rem, 2.4vw, 3.25rem); /* 28 → 52 px */
+  }
+}
+
+.carte__phrase {
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.carte__contexte {
+  color: var(--gris);
+}
+
+.carte__bouton {
+  margin-top: auto;
+}
+
+/* « Bouton étiré » : un rectangle invisible accroché au bouton recouvre
+   toute la carte. Un clic n'importe où sur la carte ouvre donc le projet,
+   tout en gardant un seul vrai bouton pour le clavier et les lecteurs
+   d'écran. */
+.carte__bouton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* Bloc gris à la place d'un visuel manquant */
+.visuel-manquant {
+  display: grid;
+  place-items: center;
+  padding: var(--espace-3);
+  background-color: var(--quadrillage);
+  color: var(--gris);
+  text-align: center;
+}
+
+/* Aperçu de démo : une fenêtre de navigateur dessinée en CSS, avec un
+   écran sombre quadrillé (rappel du papier de la page). */
+.demo-apercu {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--encre);
+  color: var(--papier);
+}
+
+.demo-apercu__barre {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-2);
+  padding: 0.5rem 0.75rem;
+  background-color: var(--papier);
+  border-bottom: 1px solid var(--bordure);
+  color: var(--gris);
+  font-family: var(--police-mono);
+  font-size: 0.75rem;
+}
+
+/* Les trois pastilles de la fenêtre : un seul rond, recopié deux fois à
+   droite par box-shadow */
+.demo-apercu__points {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 1.25rem;
+  border-radius: 50%;
+  background-color: var(--bordure);
+  box-shadow: 0.75rem 0 var(--bordure), 1.5rem 0 var(--bordure);
+}
+
+/* Adresse trop longue : coupée avec « … » au lieu de passer à la ligne */
+.demo-apercu__adresse {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.demo-apercu__ecran {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 1;
+  gap: var(--espace-1);
+  padding: var(--espace-3);
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: var(--carreau) var(--carreau);
+}
+
+.demo-apercu__etiquette {
+  color: var(--surligneur);
+}
+
+.demo-apercu__nom {
+  font-family: var(--police-titres);
+  font-size: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.demo-apercu__texte {
+  max-width: 34ch;
+}
+
+/* Le bouton de la démo passe au-dessus du bouton étiré de la carte :
+   un clic dessus lance la démo au lieu d'ouvrir la fenêtre du projet. */
+.demo-apercu__bouton {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--espace-2);
+}
+
+/* Sur fond sombre, le survol « encre » du bouton plein serait invisible */
+.demo-apercu__bouton:hover {
+  border-color: var(--papier);
+  background-color: var(--papier);
+  color: var(--encre);
+}
+
+/* Contour de focus clavier en jaune : le bleu se verrait mal sur l'écran sombre */
+.demo-apercu__bouton:focus-visible {
+  outline-color: var(--surligneur);
+}
+
+.demo-apercu__note {
+  font-size: 0.8125rem;
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carte {
+    transition: none;
+  }
+}
+
+
+/* -------------------------------------------------------------------------
    4. Fenêtre de détail d'un projet (<dialog>, remplie par js/projets.js)
    ------------------------------------------------------------------------- */
 
@@ -365,9 +596,55 @@ html:has(.fenetre[open]) {
   font-size: 0.9375rem;
 }
 
+/* Sommaire (fenêtre qui regroupe plusieurs projets, ex. AICG) */
+.detail__sommaire {
+  margin-top: var(--espace-4);
+}
+
+.detail__sommaire-liste {
+  margin-top: var(--espace-1);
+  border-top: 1px solid var(--bordure);
+}
+
+.detail__sommaire li {
+  border-bottom: 1px solid var(--bordure);
+}
+
+/* Lien sur toute la largeur, 44 px de haut minimum : facile à toucher */
+.detail__sommaire a {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-block: 0.5rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.detail__sommaire a::before {
+  content: "→";
+  margin-right: var(--espace-1);
+}
+
+.detail__sommaire a:hover {
+  text-decoration: underline;
+}
+
 /* Espacements : grand espace entre les sections, plus petit entre les blocs */
 .detail__section + .detail__section {
   margin-top: var(--espace-section);
+}
+
+/* Quand le sommaire fait défiler jusqu'à une section, on garde de la place
+   au-dessus pour la barre « Fermer », qui reste collée en haut. */
+.detail__section {
+  scroll-margin-top: 5rem;
+}
+
+/* Le titre reçoit le focus après un clic dans le sommaire : pas de contour
+   (il n'est pas cliquable), le défilement suffit à montrer où l'on est. */
+.detail__section .section__titre:focus {
+  outline: none;
 }
 
 .detail__section .section__titre {
@@ -378,9 +655,12 @@ html:has(.fenetre[open]) {
   margin-top: var(--espace-4);
 }
 
-/* Listes à puces, puces de la couleur d'accent */
-.detail__liste {
+/* Listes à puces, puces de la couleur d'accent. list-style rétablit les
+   puces, retirées par défaut sur les listes à classe (voir base.css) ;
+   « ul.detail__liste » est plus précis que « ul[class] », donc prioritaire. */
+ul.detail__liste {
   padding-left: 1.25em;
+  list-style: disc;
 }
 
 .detail__liste li + li {

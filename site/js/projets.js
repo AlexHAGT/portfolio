@@ -9,6 +9,7 @@
    Plan du fichier :
    1. Outils communs (échappement, image, fiche, liens)
    2. Cartes des projets principaux
+   2b. Cartes des projets secondaires
    3. Contenu de la fenêtre de détail (un rendu par type de bloc)
    4. Ouverture et fermeture de la fenêtre (clavier, bouton Retour, lien direct)
    5. Démarrage
@@ -23,11 +24,22 @@
    Sans cela, un texte contenant « < » pourrait casser la page, car le
    navigateur le prendrait pour le début d'une balise. */
 function echapper(texte) {
-  return String(texte)
+  return typographie(String(texte)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+    .replaceAll('"', "&quot;"));
+}
+
+
+/* Typographie française : remplace l'espace avant « : ; ! ? » et à
+   l'intérieur des guillemets « » par une espace insécable (&nbsp;), qui
+   empêche le retour à la ligne à cet endroit. Sinon, une ligne pourrait
+   commencer par « : » ou un guillemet rester seul en fin de ligne. */
+function typographie(texte) {
+  return texte
+    .replace(/ ([:;!?»])/g, "&nbsp;$1")
+    .replace(/« /g, "«&nbsp;");
 }
 
 
@@ -37,16 +49,16 @@ function echapper(texte) {
    le navigateur en déduit la taille à télécharger.
    Attention : avec srcset, le navigateur considère que l'image mesure la
    largeur donnée dans sizes. Pour une petite image posée sur fond blanc, on
-   donne donc sa vraie largeur, sinon elle serait agrandie et floue. */
-function visuel(image, classe = "projet__visuel") {
+   donne donc sa vraie largeur, sinon elle serait agrandie et floue.
+   « tailles » permet de donner une autre valeur de sizes (cartes compactes,
+   moins larges). */
+function visuel(image, classe = "projet__visuel", tailles = "(min-width: 64em) 58vw, 100vw") {
   const srcset = image.largeurs
     .map((largeur) => `${image.fichier}-${largeur}.webp ${largeur}w`)
     .join(", ");
   const plusPetite = `${image.fichier}-${image.largeurs[0]}.webp`;
   const plusGrande = Math.max(...image.largeurs);
-  const sizes = image.surFondBlanc
-    ? `${plusGrande}px`
-    : "(min-width: 64em) 58vw, 100vw";
+  const sizes = image.surFondBlanc ? `${plusGrande}px` : tailles;
   const [largeur, hauteur] = image.dimensions;
   const classeFond = image.surFondBlanc ? " visuel--fond-blanc" : "";
   const legende = image.legende
@@ -168,6 +180,106 @@ function afficherProjetsPrincipaux() {
 
 
 /* -------------------------------------------------------------------------
+   2b. Cartes des projets secondaires
+   Cartes blanches compactes : visuel en haut, badge, titre, phrase, contexte
+   et bouton « Voir le projet ». Toute la carte est cliquable (voir .carte
+   dans sections.css).
+   ------------------------------------------------------------------------- */
+
+/* Aperçu d'une démo en ligne, dessiné comme une fenêtre de navigateur.
+   La démo elle-même n'est PAS chargée : elle utilise la carte graphique et
+   télécharge des modèles, ce qui ralentirait la page. Le bouton l'ouvre
+   dans un nouvel onglet. La barre d'adresse est décorative (aria-hidden). */
+function apercuDemo(demo) {
+  return `
+    <div class="carte__visuel demo-apercu">
+      <div class="demo-apercu__barre" aria-hidden="true">
+        <span class="demo-apercu__points"></span>
+        <span class="demo-apercu__adresse">${echapper(demo.adresse)}</span>
+      </div>
+      <div class="demo-apercu__ecran">
+        <p class="libelle demo-apercu__etiquette">Démo en direct</p>
+        <p class="demo-apercu__nom">${echapper(demo.titre)}</p>
+        <p class="demo-apercu__texte">${echapper(demo.texte)}</p>
+        <a class="bouton bouton--plein libelle demo-apercu__bouton"
+           href="${echapper(demo.url)}" target="_blank" rel="noopener">
+          <span aria-hidden="true">▶</span> Essayer la démo
+          <span class="visuellement-cache">${echapper(demo.titre)} (nouvel onglet)</span>
+        </a>
+        <p class="demo-apercu__note">${echapper(demo.note)}</p>
+      </div>
+    </div>`;
+}
+
+
+/* Bloc gris neutre à la place d'un visuel pas encore fourni (règle du
+   projet). Le nom du visuel attendu est écrit dessus. */
+function visuelManquant(nom) {
+  return `
+    <div class="carte__visuel visuel-manquant">
+      <p class="libelle">Visuel à fournir : ${echapper(nom)}</p>
+    </div>`;
+}
+
+
+function carteProjetSecondaire(projet) {
+  const idTitre = `projet-${projet.id}-titre`;
+  const badge = projet.badge
+    ? `<p class="badge libelle">${echapper(projet.badge)}</p>`
+    : "";
+
+  let illustration = "";
+  if (projet.image) {
+    // Sur tablette et ordinateur, la carte occupe environ la moitié de l'écran
+    illustration = visuel(projet.image, "carte__visuel", "(min-width: 40em) 50vw, 100vw");
+  } else if (projet.demo) {
+    illustration = apercuDemo(projet.demo);
+  } else if (projet.visuelManquant) {
+    illustration = visuelManquant(projet.visuelManquant);
+  }
+
+  const bouton = projet.detail
+    ? `
+      <button class="bouton bouton--plein libelle carte__bouton" type="button"
+              data-ouvrir="${echapper(projet.id)}" aria-haspopup="dialog">
+        Voir le projet <span aria-hidden="true">→</span>
+        <span class="visuellement-cache">${echapper(projet.titre)}</span>
+      </button>`
+    : "";
+
+  // Visuel en premier : l'ordre du HTML suit l'ordre à l'écran, donc la
+  // touche Tab passe du bouton de la démo au bouton « Voir le projet ».
+  return `
+    <article class="carte" id="projet-${projet.id}" aria-labelledby="${idTitre}">
+      ${illustration}
+      <div class="carte__corps">
+        ${badge}
+        <h3 class="carte__titre" id="${idTitre}">${echapper(projet.titre)}</h3>
+        <p class="carte__phrase">${echapper(projet.phrase)}</p>
+        <p class="carte__contexte libelle">${echapper(projet.contexte)}</p>
+        ${bouton}
+      </div>
+    </article>`;
+}
+
+
+/* Projets secondaires visibles, dans l'ordre du fichier de données */
+function projetsSecondaires() {
+  return PROJETS.filter(
+    (projet) => projet.categorie === "secondaire" && projet.visible
+  );
+}
+
+
+function afficherProjetsSecondaires() {
+  const zone = document.querySelector('[data-projets="secondaire"]');
+  if (!zone) return;
+
+  zone.innerHTML = projetsSecondaires().map(carteProjetSecondaire).join("");
+}
+
+
+/* -------------------------------------------------------------------------
    3. Contenu de la fenêtre de détail
    Une fonction par type de bloc (voir la liste des types en tête de
    data/projets.fr.js). BLOCS associe chaque type à sa fonction.
@@ -188,7 +300,7 @@ const BLOCS = {
         <li class="chiffre">
           <p class="chiffre__valeur">${echapper(chiffre.valeur)}</p>
           <p class="chiffre__texte">${echapper(chiffre.texte)}</p>
-          <p class="chiffre__source libelle">Source : ${echapper(chiffre.source)}</p>
+          ${chiffre.source ? `<p class="chiffre__source libelle">Source : ${echapper(chiffre.source)}</p>` : ""}
         </li>`).join("")}
     </ul>`,
 
@@ -247,6 +359,14 @@ const BLOCS = {
         ${bloc.elements.map((source) => `<li>${lienExterne(source, "detail__lien")}</li>`).join("")}
       </ul>
     </div>`,
+
+  // Même encadré que la mention du résumé
+  note: (bloc) => `<p class="detail__mention">${echapper(bloc.texte)}</p>`,
+
+  liens: (bloc) => `
+    <ul class="projet__liens" role="list">
+      ${bloc.elements.map((lien) => `<li>${lienExterne(lien)}</li>`).join("")}
+    </ul>`,
 };
 
 
@@ -262,9 +382,35 @@ function rendreBloc(bloc) {
 }
 
 
+/* Identifiant de la section n° index d'un projet (sert au sommaire) */
+function idSection(projet, index) {
+  return `detail-${projet.id}-${index + 1}`;
+}
+
+
+/* Sommaire : liens vers chaque section de la fenêtre. Le clic est géré en
+   JavaScript (partie 4) : un lien « #… » classique changerait l'adresse de
+   la page, ce qui fermerait la fenêtre. */
+function sommaire(projet) {
+  const liens = projet.detail.sections
+    .map((section, index) => `
+      <li><a href="#${idSection(projet, index)}" data-sommaire>${echapper(section.titre)}</a></li>`)
+    .join("");
+  return `
+    <nav class="detail__sommaire" aria-label="Sommaire du projet">
+      <p class="libelle">Sommaire</p>
+      <ol class="detail__sommaire-liste" role="list">${liens}</ol>
+    </nav>`;
+}
+
+
 /* Contenu complet de la fenêtre : à gauche l'essentiel du projet (reste
-   visible pendant la lecture sur ordinateur), à droite les sections. */
+   visible pendant la lecture sur ordinateur), à droite les sections.
+   « numero » vaut null pour un projet secondaire : pas de grand numéro. */
 function contenuDetail(projet, numero) {
+  const grandNumero = numero
+    ? `<p class="projet__numero" aria-hidden="true">${numeroSurDeuxChiffres(numero)}</p>`
+    : "";
   const badge = projet.badge
     ? `<p class="badge libelle">${echapper(projet.badge)}</p>`
     : "";
@@ -275,23 +421,26 @@ function contenuDetail(projet, numero) {
     ? `<ul class="projet__liens" role="list">${projet.liens.map((lien) => `<li>${lienExterne(lien)}</li>`).join("")}</ul>`
     : "";
 
+  // tabindex="-1" : le titre peut recevoir le focus quand on clique sur le
+  // sommaire (le clavier repart de là), sans entrer dans l'ordre de la touche Tab.
   const sections = projet.detail.sections
-    .map((section) => `
-      <section class="detail__section">
-        <h3 class="section__titre libelle">${echapper(section.titre)}</h3>
+    .map((section, index) => `
+      <section class="detail__section" id="${idSection(projet, index)}">
+        <h3 class="section__titre libelle" tabindex="-1">${echapper(section.titre)}</h3>
         ${section.blocs.map(rendreBloc).join("")}
       </section>`)
     .join("");
 
   return `
     <div class="detail__resume">
-      <p class="projet__numero" aria-hidden="true">${numeroSurDeuxChiffres(numero)}</p>
+      ${grandNumero}
       <h2 class="projet__titre" id="fenetre-titre">${echapper(projet.titre)}</h2>
       ${badge}
       <p class="projet__phrase">${echapper(projet.phrase)}</p>
       ${fiche(projet.fiche)}
       ${mention}
       ${liensExternes}
+      ${projet.detail.sommaire ? sommaire(projet) : ""}
     </div>
     <div class="detail__sections">${sections}</div>`;
 }
@@ -318,8 +467,10 @@ const fenetreNumero = fenetre.querySelector("[data-fenetre-numero]");
 let elementAvantOuverture = null;
 
 
+/* Projet visible (principal ou secondaire) qui a une fenêtre de détail */
 function trouverProjet(id) {
-  return projetsPrincipaux().find((projet) => projet.id === id && projet.detail);
+  return [...projetsPrincipaux(), ...projetsSecondaires()]
+    .find((projet) => projet.id === id && projet.detail);
 }
 
 
@@ -331,8 +482,14 @@ function ouvrirProjet(id, ajouterHistorique) {
   const projet = trouverProjet(id);
   if (!projet) return;
 
-  const numero = projetsPrincipaux().indexOf(projet) + 1;
-  fenetreNumero.textContent = `Projet ${numeroSurDeuxChiffres(numero)} / ${projet.titre}`;
+  // Projets principaux numérotés (01, 02…) ; projets secondaires sans numéro
+  let numero = null;
+  if (projet.categorie === "principal") {
+    numero = projetsPrincipaux().indexOf(projet) + 1;
+    fenetreNumero.textContent = `Projet ${numeroSurDeuxChiffres(numero)} / ${projet.titre}`;
+  } else {
+    fenetreNumero.textContent = `Autres projets / ${projet.titre}`;
+  }
   fenetreContenu.innerHTML = contenuDetail(projet, numero);
 
   elementAvantOuverture = document.activeElement;
@@ -360,6 +517,19 @@ function demanderFermeture() {
 document.addEventListener("click", (evenement) => {
   const bouton = evenement.target.closest("[data-ouvrir]");
   if (bouton) ouvrirProjet(bouton.dataset.ouvrir, true);
+});
+
+// Clic dans le sommaire : faire défiler la fenêtre jusqu'à la section, sans
+// changer l'adresse, puis y placer le focus clavier.
+fenetreContenu.addEventListener("click", (evenement) => {
+  const lien = evenement.target.closest("[data-sommaire]");
+  if (!lien) return;
+  evenement.preventDefault();
+  const section = document.getElementById(lien.hash.slice(1));
+  if (!section) return;
+  const sansAnimation = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  section.scrollIntoView({ behavior: sansAnimation ? "auto" : "smooth" });
+  section.querySelector("h3").focus({ preventScroll: true });
 });
 
 // Bouton « Fermer » de la fenêtre
@@ -400,6 +570,7 @@ window.addEventListener("popstate", () => {
    ------------------------------------------------------------------------- */
 
 afficherProjetsPrincipaux();
+afficherProjetsSecondaires();
 
 // Lien direct vers un projet (…/portfolio/#occlumap) : ouvrir sa fenêtre
 const projetDemande = location.hash.slice(1);

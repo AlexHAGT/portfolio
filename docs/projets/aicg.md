@@ -51,8 +51,8 @@ trois projets réalisés dans le cours AICG.
 
 ## 1. ClassDiGit — reconnaissance de chiffres manuscrits
 
-- **Démo :** https://redshneckk.github.io/ClassDiGit/
-- **Code :** https://github.com/RedShneckk/ClassDiGit
+- **Démo :** https://alexhagt.github.io/ClassDiGit/
+- **Code :** https://github.com/AlexHAGT/ClassDiGit
 - **Date :** novembre 2025
 - **Capture :** [À COMPLÉTER : capture de l'interface avec un chiffre dessiné]
 
@@ -83,8 +83,8 @@ jusqu'à son utilisation dans une application, sans serveur.
 
 ## 2. Ray marching WebGPU — scène 3D interactive
 
-- **Démo :** https://redshneckk.github.io/Projet-CG-WebGPU-AH-/
-- **Code :** https://github.com/RedShneckk/Projet-CG-WebGPU-AH-
+- **Démo :** https://alexhagt.github.io/Projet-CG-WebGPU-AH-/
+- **Code :** https://github.com/AlexHAGT/Projet-CG-WebGPU-AH-
 - **Date :** décembre 2025
 - **Capture :** disponible dans le dépôt (`How it looks like.png`), à copier dans `assets/`
 
@@ -110,8 +110,8 @@ puis cliquer une fois sur « Compile ». Afficher cette consigne au-dessus de la
 
 ## 3. RAG Lit Reviewer — revue de littérature assistée par IA
 
-- **Démo :** https://redshneckk.github.io/rag-lit-reviewer/
-- **Code :** https://github.com/RedShneckk/rag-lit-reviewer
+- **Démo :** https://alexhagt.github.io/rag-lit-reviewer/
+- **Code :** https://github.com/AlexHAGT/rag-lit-reviewer
 - **Date :** janvier 2026
 - **Capture :** [À COMPLÉTER : capture de l'interface avec une revue générée]
 
