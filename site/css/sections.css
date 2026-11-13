@@ -283,8 +283,11 @@
 /* 1 colonne sur mobile, 2 à partir de la tablette, 3 sur ordinateur s'il
    y a au moins 3 cartes. :has(> :nth-child(3)) se lit « la liste qui a un
    3e enfant » : la mise en page s'adapte seule quand on affiche le stage. */
+/* minmax(0, 1fr) dès le mobile : la colonne fait exactement la largeur de
+   l'écran, jamais plus, même si un contenu voudrait l'élargir. */
 .cartes-liste {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--gouttiere);
 }
 
@@ -308,6 +311,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  min-width: 0; /* la carte peut rétrécir à la largeur de sa colonne */
   border: 1px solid var(--bordure);
   background-color: var(--blanc);
   transition: border-color 0.15s;
@@ -322,8 +326,14 @@
    Dans une rangée, les cartes ont la même hauteur : flex-grow donne la
    hauteur en trop au visuel, pour que les textes des cartes voisines
    commencent au même niveau. */
+/* width: 100% fixe la largeur : le format 3:2 sert alors uniquement à
+   calculer la hauteur. Sans cela, Safari (iPhone) peut faire l'inverse et
+   déduire une largeur trop grande de la hauteur, ce qui élargit la carte
+   au-delà de l'écran. */
 .carte__visuel {
   display: grid;
+  width: 100%;
+  min-width: 0;
   aspect-ratio: 3 / 2;
   flex: 1 0 auto;
   border-bottom: 1px solid var(--bordure);
