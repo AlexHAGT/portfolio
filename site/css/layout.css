@@ -41,32 +41,45 @@
   border-bottom: 2px solid var(--accent);
 }
 
-/* Mobile : nom sur une ligne, liens sur la suivante */
+/* Mobile : nom sur une ligne, liens sur la suivante.
+   Peu de marge en haut et en bas : les liens ont déjà leur propre hauteur
+   de 44 px (voir plus bas). */
 .en-tete__interieur {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--espace-1) var(--espace-3);
-  padding-block: var(--espace-2);
+  gap: 0 var(--espace-3);
+  padding-block: 0.25rem;
+}
+
+/* Nom et liens : zone cliquable de 44 px de haut (taille recommandée pour
+   le doigt), sans changer leur apparence. inline-flex + align-items
+   centre le texte verticalement dans cette hauteur. */
+.en-tete__nom,
+.en-tete__liens a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  text-decoration: none;
 }
 
 .en-tete__nom {
   color: var(--accent);
-  text-decoration: none;
 }
 
+/* Espace réduit entre les liens sur mobile : les trois tiennent sur une
+   ligne, même sur un écran de 320 px */
 .en-tete__liens {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--espace-3);
+  gap: 0 0.75rem;
 }
 
-.en-tete__liens a {
-  /* Zone cliquable d'au moins 24 px de haut, confortable au doigt */
-  display: inline-block;
-  padding-block: 0.375rem;
-  text-decoration: none;
+@media (min-width: 40em) {
+  .en-tete__liens {
+    column-gap: var(--espace-3);
+  }
 }
 
 /* Crochets [ ] autour des liens, ajoutés par le CSS pour ne pas encombrer le
@@ -96,8 +109,10 @@
     z-index: 10;
   }
 
+  /* 17 px + 44 px de lien + 17 px : l'en-tête garde sa hauteur de 78 px
+     (les sections s'arrêtent dessous grâce à scroll-margin-top, plus bas) */
   .en-tete__interieur {
-    padding-block: var(--espace-3);
+    padding-block: 1.0625rem;
   }
 }
 
@@ -160,14 +175,19 @@
 .pied__mentions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
   gap: var(--espace-1) var(--espace-3);
-  padding-block: var(--espace-3);
+  padding-block: var(--espace-2);
   border-top: 1px solid var(--encre);
   color: var(--gris);
 }
 
+/* « Retour en haut » : zone cliquable de 44 px de haut (18 px de texte +
+   2 × 13 px de marge intérieure), comme l'en-tête */
 .pied__mentions a {
+  display: inline-block;
+  padding-block: 0.8125rem;
   color: inherit;
 }
 

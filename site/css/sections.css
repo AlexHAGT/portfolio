@@ -97,9 +97,12 @@
    ------------------------------------------------------------------------- */
 
 /* Nom en très grand : la première impression */
+/* min(…, 15vw) : sous 375 px de large, la taille diminue avec l'écran pour
+   que « ALEXANDRE » ne soit jamais coupé (au-delà, 15vw est plus grand que
+   --taille-nom et ne change rien). */
 .profil__nom {
   margin-block: var(--espace-3) var(--espace-6);
-  font-size: var(--taille-nom);
+  font-size: min(var(--taille-nom), 15vw);
   font-weight: 800;
 }
 
