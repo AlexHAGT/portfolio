@@ -28,6 +28,7 @@
        qui les utilise. -->
   <script src="data/projets.fr.js" defer></script>
   <script src="js/projets.js" defer></script>
+  <script src="js/contact.js" defer></script>
 </head>
 <body>
 
@@ -229,11 +230,44 @@
       </div>
     </section>
 
-    <!-- ===================== 5. Contact et réseaux (étape 8) ===================== -->
+    <!-- ===================== 5. Contact et réseaux ===================== -->
+    <!-- Règle du projet : ne jamais afficher le numéro de téléphone.
+         CV en PDF : lien à ajouter plus tard (voir PLAN.md). -->
     <section class="section" id="contact" aria-labelledby="titre-contact">
       <div class="conteneur">
         <h2 class="section__titre libelle" id="titre-contact"><span aria-hidden="true">04 /</span> Contact</h2>
-        <p class="a-venir libelle">E-mail, LinkedIn, GitHub et CV : section à venir (étape 8)</p>
+
+        <p class="contact__accroche">Je recherche un stage de fin d'études de 5 à 6 mois, à partir de mars 2027. Écrivez-moi.</p>
+
+        <!-- mailto: ouvre la messagerie du visiteur avec l'adresse remplie.
+             <wbr> : endroit où le navigateur peut passer à la ligne si
+             l'adresse ne tient pas (petit écran), ici juste après « @ ». -->
+        <a class="contact__email" href="mailto:alexandre.haguet@icloud.com">alexandre.haguet@<wbr>icloud.com</a>
+
+        <!-- Bouton caché par défaut (hidden) : js/contact.js l'affiche si le
+             navigateur sait copier. role="status" : le message « Adresse
+             copiée » est lu par les lecteurs d'écran dès qu'il apparaît. -->
+        <div class="contact__copie">
+          <button class="bouton libelle" type="button" data-copier="alexandre.haguet@icloud.com" hidden>
+            Copier l'adresse
+          </button>
+          <p class="contact__message libelle" role="status" data-copier-message></p>
+        </div>
+
+        <ul class="contact__liens" role="list">
+          <li>
+            <a class="bouton bouton--plein libelle" href="https://www.linkedin.com/in/alexandre-haguet" target="_blank" rel="noopener">
+              LinkedIn <span aria-hidden="true">↗</span>
+              <span class="visuellement-cache">(nouvel onglet)</span>
+            </a>
+          </li>
+          <li>
+            <a class="bouton bouton--plein libelle" href="https://github.com/AlexHAGT" target="_blank" rel="noopener">
+              GitHub <span aria-hidden="true">↗</span>
+              <span class="visuellement-cache">(nouvel onglet)</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 

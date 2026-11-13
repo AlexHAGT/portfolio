@@ -1027,3 +1027,64 @@ ul.detail__liste {
 .parcours__interets .libelle {
   margin-right: var(--espace-1);
 }
+
+
+/* -------------------------------------------------------------------------
+   6. Contact
+   L'adresse e-mail en très grand (comme huyml), puis les liens.
+   ------------------------------------------------------------------------- */
+
+.contact__accroche {
+  max-width: 32ch;
+  font-size: clamp(1.375rem, 1rem + 1.2vw, 2rem); /* 22 → 32 px, comme le profil */
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* La taille suit la largeur de l'écran (vw) pour que l'adresse tienne sur
+   une ligne sur ordinateur ; sur mobile, elle passe à la ligne après « @ »
+   (balise <wbr> dans le HTML). */
+.contact__email {
+  display: inline-block;
+  margin-top: var(--espace-6);
+  font-family: var(--police-titres);
+  font-size: clamp(2rem, 6vw, 7rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--encre);
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+  overflow-wrap: anywhere; /* sécurité : jamais de débordement */
+  transition: color 0.15s;
+}
+
+.contact__email:hover {
+  color: var(--accent);
+}
+
+.contact__copie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espace-2);
+  margin-top: var(--espace-3);
+}
+
+.contact__message {
+  color: var(--accent);
+}
+
+.contact__liens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-2);
+  margin-top: var(--espace-6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__email {
+    transition: none;
+  }
+}

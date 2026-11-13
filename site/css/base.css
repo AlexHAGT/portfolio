@@ -168,6 +168,12 @@ img {
   height: auto;
 }
 
+/* Un élément marqué « hidden » reste caché, même si une classe lui donne un
+   display (ex. .bouton { display: inline-flex }), qui sinon l'emporterait. */
+[hidden] {
+  display: none !important;
+}
+
 
 /* -------------------------------------------------------------------------
    4. Page
