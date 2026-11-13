@@ -643,8 +643,24 @@ html:has(.fenetre[open]) {
 
 /* Le titre reçoit le focus après un clic dans le sommaire : pas de contour
    (il n'est pas cliquable), le défilement suffit à montrer où l'on est. */
-.detail__section .section__titre:focus {
+.detail__section .section__titre:focus,
+.detail__titre-projet:focus {
   outline: none;
+}
+
+/* Titre d'un projet dans une fenêtre qui en regroupe plusieurs (AICG) :
+   en grand, sous un trait épais, pour bien séparer les projets */
+.detail__titre-projet {
+  padding-top: var(--espace-2);
+  border-top: 3px solid var(--encre);
+  font-size: clamp(2rem, 1.4rem + 2vw, 3.25rem); /* 32 → 52 px */
+  font-weight: 800;
+}
+
+/* Date sous le titre, collée à lui (annule l'espace normal entre blocs) */
+.detail__section > .detail__sous-titre {
+  margin-top: var(--espace-1);
+  color: var(--accent);
 }
 
 .detail__section .section__titre {
@@ -786,6 +802,81 @@ ul.detail__liste {
 .schema__liaison {
   text-align: center;
   color: var(--accent);
+}
+
+/* -------------------------------------------------------------------------
+   4b. Fenêtre de démo (<dialog> .fenetre--demo, remplie par js/projets.js)
+   Barre en haut, consignes, puis la démo sur toute la hauteur restante.
+   ------------------------------------------------------------------------- */
+
+/* La fenêtre ne défile pas : c'est la démo qui occupe la place.
+   [open] est indispensable : sans lui, display: flex afficherait la fenêtre
+   même fermée (le navigateur la cache avec display: none). */
+.fenetre--demo {
+  padding: 0;
+  overflow: hidden;
+}
+
+.fenetre--demo[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Barre : titre à gauche, boutons à droite ; passe à la ligne si besoin */
+.fenetre--demo .fenetre__barre-interieur {
+  flex-wrap: wrap;
+}
+
+.fenetre__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-1);
+}
+
+/* Consignes côte à côte, au-dessus de la démo */
+.demo__infos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-2);
+  padding-block: var(--espace-2);
+}
+
+.demo__infos:empty {
+  display: none;
+}
+
+/* Encadrés plus compacts que dans la fenêtre de projet : la place va à la démo */
+.demo__infos .detail__mention {
+  margin: 0;
+  padding: var(--espace-1) var(--espace-2);
+  font-size: 0.875rem;
+}
+
+/* flex: 1 : la démo prend toute la hauteur restante de la fenêtre.
+   position: relative sert de repère au message de chargement. */
+.demo__cadre {
+  position: relative;
+  flex: 1;
+  border-top: 1px solid var(--bordure);
+  background-color: var(--blanc);
+}
+
+.demo__chargement {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  max-width: none; /* annule la largeur maximale des paragraphes (base.css) */
+  color: var(--gris);
+}
+
+/* L'iframe passe devant le message et le recouvre une fois chargée */
+.demo__iframe {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 /* Sources en bas de section */

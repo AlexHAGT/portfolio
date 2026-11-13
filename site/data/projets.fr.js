@@ -29,7 +29,9 @@
                   ou null. Pour un projet secondaire sans image, l'un des
                   deux champs suivants le remplace :
    - demo       : aperçu d'une démo en ligne, dessiné en fenêtre de
-                  navigateur : { titre, adresse, url, texte, note } ;
+                  navigateur : { titre, adresse, url, code, consigne, texte, note }
+                  (code : adresse du code source ; consigne : texte affiché
+                  au-dessus de la démo, ou null) ;
    - visuelManquant : nom du visuel attendu, affiché dans un bloc gris ;
    - liens      : boutons externes (sous la fiche ou dans la fenêtre), [] pour aucun ;
    - detail     : contenu de la fenêtre « Voir le projet », ou null pour ne
@@ -38,8 +40,10 @@
    Contenu de « detail » :
    - mention  : phrase d'avertissement affichée sous la fiche, ou null ;
    - sommaire : true pour afficher la liste cliquable des sections
-                (utile quand la fenêtre regroupe plusieurs projets) ;
-   - sections : liste de { titre, blocs }. Chaque bloc a un « type » :
+                (utile quand la fenêtre regroupe plusieurs projets). Les
+                titres de sections sont alors affichés en grand ;
+   - sections : liste de { titre, sousTitre, blocs } (sousTitre facultatif,
+                ex. la date). Chaque bloc a un « type » :
        { type: "paragraphe", texte: "..." }
        { type: "liste", elements: ["...", "..."] }
        { type: "chiffres", elements: [{ valeur, texte, source }] }
@@ -56,7 +60,11 @@
        { type: "note", texte: "..." }
            consigne ou avertissement, dans un encadré
        { type: "liens", elements: [{ texte, url }] }
-           boutons vers des pages externes (démo, code…)
+           boutons vers des pages externes
+       { type: "demo", titre, url, code, consigne }
+           bouton « Essayer la démo » (fenêtre intégrée sur ordinateur,
+           nouvel onglet sur mobile), lien vers le code, et consigne
+           facultative (null pour aucune)
    ========================================================================= */
 
 const PROJETS = [
@@ -552,6 +560,8 @@ const PROJETS = [
       titre: "ClassDiGit",
       adresse: "alexhagt.github.io/ClassDiGit",
       url: "https://alexhagt.github.io/ClassDiGit/",
+      code: "https://github.com/AlexHAGT/ClassDiGit",
+      consigne: null,
       texte: "Dessinez un chiffre : deux réseaux de neurones le reconnaissent.",
       note: "Démo WebGPU : fonctionne sur Chrome ou Edge récent, sur ordinateur.",
     },
@@ -561,7 +571,8 @@ const PROJETS = [
       sommaire: true,
       sections: [
         {
-          titre: "ClassDiGit · novembre 2025",
+          titre: "ClassDiGit",
+          sousTitre: "Novembre 2025",
           blocs: [
             { type: "paragraphe", texte: "On dessine un chiffre à la souris, et deux réseaux de neurones le reconnaissent instantanément, directement dans le navigateur." },
             {
@@ -582,16 +593,17 @@ const PROJETS = [
             },
             { type: "paragraphe", texte: "Une chaîne complète de machine learning, de l'entraînement du modèle jusqu'à son utilisation dans une application, sans serveur. Technologies : Python, TinyGrad, WebGPU, JavaScript, HTML, Tailwind CSS." },
             {
-              type: "liens",
-              elements: [
-                { texte: "Essayer la démo", url: "https://alexhagt.github.io/ClassDiGit/" },
-                { texte: "Voir le code sur GitHub", url: "https://github.com/AlexHAGT/ClassDiGit" },
-              ],
+              type: "demo",
+              titre: "ClassDiGit",
+              url: "https://alexhagt.github.io/ClassDiGit/",
+              code: "https://github.com/AlexHAGT/ClassDiGit",
+              consigne: null,
             },
           ],
         },
         {
-          titre: "Ray marching WebGPU · décembre 2025",
+          titre: "Ray marching WebGPU",
+          sousTitre: "Décembre 2025",
           blocs: [
             { type: "paragraphe", texte: "Une petite scène 3D (sol en damier, sphère et cube) calculée en temps réel par la carte graphique, dont on modifie les objets avec des curseurs." },
             {
@@ -604,18 +616,18 @@ const PROJETS = [
               ],
             },
             { type: "paragraphe", texte: "Des bases en infographie 3D et en programmation GPU. Technologies : WebGPU, WGSL, JavaScript, HTML." },
-            { type: "note", texte: "Pour lancer la démo : choisir le shader « Ray Marching – Basic », puis cliquer une fois sur « Compile »." },
             {
-              type: "liens",
-              elements: [
-                { texte: "Essayer la démo", url: "https://alexhagt.github.io/Projet-CG-WebGPU-AH-/" },
-                { texte: "Voir le code sur GitHub", url: "https://github.com/AlexHAGT/Projet-CG-WebGPU-AH-" },
-              ],
+              type: "demo",
+              titre: "Ray marching WebGPU",
+              url: "https://alexhagt.github.io/Projet-CG-WebGPU-AH-/",
+              code: "https://github.com/AlexHAGT/Projet-CG-WebGPU-AH-",
+              consigne: "Pour lancer la démo : choisir le shader « Ray Marching – Basic », puis cliquer une fois sur « Compile ».",
             },
           ],
         },
         {
-          titre: "RAG Lit Reviewer · janvier 2026",
+          titre: "RAG Lit Reviewer",
+          sousTitre: "Janvier 2026",
           blocs: [
             { type: "paragraphe", texte: "On dépose des articles scientifiques en PDF, et un modèle de langage local en tire une revue de littérature structurée, sans qu'aucune donnée ne quitte le navigateur." },
             {
@@ -628,13 +640,12 @@ const PROJETS = [
               ],
             },
             { type: "paragraphe", texte: "Une architecture d'IA générative actuelle, qui fonctionne en local par souci de confidentialité. Technologies : JavaScript, PDF.js, Transformers.js, WebLLM, WebGPU." },
-            { type: "note", texte: "Premier lancement long : le modèle de langage se télécharge dans le navigateur." },
             {
-              type: "liens",
-              elements: [
-                { texte: "Essayer la démo", url: "https://alexhagt.github.io/rag-lit-reviewer/" },
-                { texte: "Voir le code sur GitHub", url: "https://github.com/AlexHAGT/rag-lit-reviewer" },
-              ],
+              type: "demo",
+              titre: "RAG Lit Reviewer",
+              url: "https://alexhagt.github.io/rag-lit-reviewer/",
+              code: "https://github.com/AlexHAGT/rag-lit-reviewer",
+              consigne: "Premier lancement long : le modèle de langage se télécharge dans le navigateur.",
             },
           ],
         },

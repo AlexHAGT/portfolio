@@ -178,5 +178,38 @@
     <div class="conteneur grille fenetre__contenu" data-fenetre-contenu></div>
   </dialog>
 
+  <!-- ===================== Fenêtre de démo (démos AICG) =====================
+       Seconde fenêtre <dialog>, ouverte par-dessus tout le reste au clic sur
+       « Essayer la démo » (sur ordinateur). js/projets.js remplit le titre,
+       les liens et les consignes, puis crée l'iframe de la démo dans
+       data-demo-cadre. Mêmes styles que la fenêtre de projet (.fenetre). -->
+  <dialog class="fenetre fenetre--demo" id="fenetre-demo" aria-labelledby="demo-titre">
+    <div class="fenetre__barre">
+      <div class="conteneur fenetre__barre-interieur">
+        <p class="libelle" id="demo-titre" data-demo-titre></p>
+        <ul class="fenetre__actions" role="list">
+          <li>
+            <a class="bouton libelle" href="#" target="_blank" rel="noopener" data-demo-onglet>
+              Ouvrir dans un nouvel onglet <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li>
+            <a class="bouton libelle" href="#" target="_blank" rel="noopener" data-demo-code>
+              Voir le code sur GitHub <span aria-hidden="true">↗</span>
+              <span class="visuellement-cache">(nouvel onglet)</span>
+            </a>
+          </li>
+          <li>
+            <button class="bouton libelle" type="button" data-fermer autofocus>
+              Fermer <span aria-hidden="true">✕</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="conteneur demo__infos" data-demo-infos></div>
+    <div class="demo__cadre" data-demo-cadre></div>
+  </dialog>
+
 </body>
 </html>

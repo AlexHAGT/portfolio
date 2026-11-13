@@ -12,6 +12,7 @@
    2b. Cartes des projets secondaires
    3. Contenu de la fenêtre de détail (un rendu par type de bloc)
    4. Ouverture et fermeture de la fenêtre (clavier, bouton Retour, lien direct)
+   4b. Fenêtre de démo (démos AICG dans une iframe)
    5. Démarrage
    ========================================================================= */
 
@@ -104,6 +105,24 @@ function lienExterne(lien, classe = "bouton libelle") {
 }
 
 
+/* Bouton « Essayer la démo ». C'est un vrai lien vers la démo, qui s'ouvre
+   dans un nouvel onglet : c'est ce qui se passe sur mobile, ou si
+   JavaScript est désactivé. Sur ordinateur, la partie 4b intercepte le clic
+   et ouvre la démo dans une fenêtre du portfolio. Les attributs data-demo-…
+   transmettent à cette fenêtre le titre, le lien du code et la consigne. */
+function lienDemo(demo, classe = "") {
+  return `
+    <a class="bouton bouton--plein libelle ${classe}" href="${echapper(demo.url)}"
+       target="_blank" rel="noopener" data-demo
+       data-demo-titre="${echapper(demo.titre)}"
+       data-demo-code="${echapper(demo.code)}"
+       data-demo-consigne="${echapper(demo.consigne || "")}">
+      <span aria-hidden="true">▶</span> Essayer la démo
+      <span class="visuellement-cache">${echapper(demo.titre)}</span>
+    </a>`;
+}
+
+
 /* Numéro sur deux chiffres : 1 → « 01 » */
 function numeroSurDeuxChiffres(numero) {
   return String(numero).padStart(2, "0");
@@ -187,9 +206,10 @@ function afficherProjetsPrincipaux() {
    ------------------------------------------------------------------------- */
 
 /* Aperçu d'une démo en ligne, dessiné comme une fenêtre de navigateur.
-   La démo elle-même n'est PAS chargée : elle utilise la carte graphique et
-   télécharge des modèles, ce qui ralentirait la page. Le bouton l'ouvre
-   dans un nouvel onglet. La barre d'adresse est décorative (aria-hidden). */
+   La démo elle-même n'est PAS chargée avec la page : elle utilise la carte
+   graphique et télécharge des modèles, ce qui ralentirait tout. Elle ne se
+   charge qu'au clic sur le bouton. La barre d'adresse est décorative
+   (aria-hidden). */
 function apercuDemo(demo) {
   return `
     <div class="carte__visuel demo-apercu">
@@ -201,11 +221,7 @@ function apercuDemo(demo) {
         <p class="libelle demo-apercu__etiquette">Démo en direct</p>
         <p class="demo-apercu__nom">${echapper(demo.titre)}</p>
         <p class="demo-apercu__texte">${echapper(demo.texte)}</p>
-        <a class="bouton bouton--plein libelle demo-apercu__bouton"
-           href="${echapper(demo.url)}" target="_blank" rel="noopener">
-          <span aria-hidden="true">▶</span> Essayer la démo
-          <span class="visuellement-cache">${echapper(demo.titre)} (nouvel onglet)</span>
-        </a>
+        ${lienDemo(demo, "demo-apercu__bouton")}
         <p class="demo-apercu__note">${echapper(demo.note)}</p>
       </div>
     </div>`;
@@ -367,6 +383,14 @@ const BLOCS = {
     <ul class="projet__liens" role="list">
       ${bloc.elements.map((lien) => `<li>${lienExterne(lien)}</li>`).join("")}
     </ul>`,
+
+  // Consigne éventuelle, puis « Essayer la démo » et le lien vers le code
+  demo: (bloc) => `
+    ${bloc.consigne ? `<p class="detail__mention">${echapper(bloc.consigne)}</p>` : ""}
+    <ul class="projet__liens" role="list">
+      <li>${lienDemo(bloc)}</li>
+      <li>${lienExterne({ texte: "Voir le code sur GitHub", url: bloc.code })}</li>
+    </ul>`,
 };
 
 
@@ -393,8 +417,11 @@ function idSection(projet, index) {
    la page, ce qui fermerait la fenêtre. */
 function sommaire(projet) {
   const liens = projet.detail.sections
-    .map((section, index) => `
-      <li><a href="#${idSection(projet, index)}" data-sommaire>${echapper(section.titre)}</a></li>`)
+    .map((section, index) => {
+      const date = section.sousTitre ? ` · ${section.sousTitre}` : "";
+      return `
+      <li><a href="#${idSection(projet, index)}" data-sommaire>${echapper(section.titre + date)}</a></li>`;
+    })
     .join("");
   return `
     <nav class="detail__sommaire" aria-label="Sommaire du projet">
@@ -423,12 +450,23 @@ function contenuDetail(projet, numero) {
 
   // tabindex="-1" : le titre peut recevoir le focus quand on clique sur le
   // sommaire (le clavier repart de là), sans entrer dans l'ordre de la touche Tab.
+  // Fenêtre avec sommaire (plusieurs projets regroupés, ex. AICG) : chaque
+  // section est un projet, son titre est affiché en grand.
   const sections = projet.detail.sections
-    .map((section, index) => `
+    .map((section, index) => {
+      const titre = projet.detail.sommaire
+        ? `<h3 class="detail__titre-projet" tabindex="-1">${echapper(section.titre)}</h3>`
+        : `<h3 class="section__titre libelle" tabindex="-1">${echapper(section.titre)}</h3>`;
+      const sousTitre = section.sousTitre
+        ? `<p class="detail__sous-titre libelle">${echapper(section.sousTitre)}</p>`
+        : "";
+      return `
       <section class="detail__section" id="${idSection(projet, index)}">
-        <h3 class="section__titre libelle" tabindex="-1">${echapper(section.titre)}</h3>
+        ${titre}
+        ${sousTitre}
         ${section.blocs.map(rendreBloc).join("")}
-      </section>`)
+      </section>`;
+    })
     .join("");
 
   return `
@@ -556,12 +594,134 @@ fenetre.addEventListener("close", () => {
 
 // Boutons « Retour » / « Suivant » du navigateur
 window.addEventListener("popstate", () => {
+  // La fenêtre de démo est au-dessus de tout : « Retour » la ferme d'abord,
+  // sans toucher à la fenêtre du projet qui est dessous (voir partie 4b).
+  if (fenetreDemo.open && !(history.state && history.state.demo)) {
+    fermerDemo();
+    return;
+  }
+
   const id = location.hash.slice(1);
   if (trouverProjet(id)) {
     ouvrirProjet(id, false);
   } else if (fenetre.open) {
     fenetre.close();
   }
+});
+
+
+/* -------------------------------------------------------------------------
+   4b. Fenêtre de démo (démos AICG)
+   Une seconde fenêtre <dialog>, qui s'ouvre par-dessus tout le reste (y
+   compris la fenêtre d'un projet). La démo est affichée dans une <iframe> :
+   un cadre qui montre une autre page web à l'intérieur du portfolio.
+   - L'iframe n'est créée qu'à l'ouverture, et supprimée à la fermeture :
+     la démo cesse alors d'utiliser la carte graphique.
+   - Sur un écran de moins de 64em (1024 px), le clic n'est pas intercepté :
+     le lien ouvre la démo dans un nouvel onglet (écran trop petit, WebGPU
+     souvent absent sur mobile).
+   - « Retour » ferme la démo, comme pour les projets : on ajoute une entrée
+     dans l'historique, sans changer l'adresse.
+   ------------------------------------------------------------------------- */
+
+const fenetreDemo = document.getElementById("fenetre-demo");
+const demoTitre = fenetreDemo.querySelector("[data-demo-titre]");
+const demoOnglet = fenetreDemo.querySelector("[data-demo-onglet]");
+const demoCode = fenetreDemo.querySelector("[data-demo-code]");
+const demoInfos = fenetreDemo.querySelector("[data-demo-infos]");
+const demoCadre = fenetreDemo.querySelector("[data-demo-cadre]");
+
+// matchMedia : la même condition qu'une media query CSS, testée en JavaScript
+const ecranAssezLarge = window.matchMedia("(min-width: 64em)");
+
+let elementAvantDemo = null;
+
+
+/* Ouvre la démo correspondant au lien « Essayer la démo » cliqué */
+function ouvrirDemo(lien) {
+  const { demoTitre: titre, demoCode: code, demoConsigne: consigne } = lien.dataset;
+
+  demoTitre.textContent = `Démo / ${titre}`;
+  demoOnglet.href = lien.href;
+  demoCode.href = code;
+
+  // Avertissements au-dessus de la démo
+  const infos = ["Démo WebGPU : fonctionne sur Chrome ou Edge récent, sur ordinateur."];
+  if (consigne) infos.push(consigne);
+  // navigator.gpu n'existe que si le navigateur sait utiliser WebGPU
+  if (!("gpu" in navigator)) {
+    infos.push("Votre navigateur ne semble pas prendre en charge WebGPU : la démo risque de ne pas fonctionner. Essayez Chrome ou Edge récent, ou ouvrez-la dans un nouvel onglet.");
+  }
+  demoInfos.innerHTML = infos
+    .map((texte) => `<p class="detail__mention">${echapper(texte)}</p>`)
+    .join("");
+
+  // Le message « Chargement… » est derrière l'iframe : la démo le recouvre
+  // dès qu'elle s'affiche. title : nom du cadre pour les lecteurs d'écran.
+  // allow="fullscreen" : autorise le bouton plein écran du Ray marching.
+  demoCadre.innerHTML = `
+    <p class="demo__chargement libelle">Chargement de la démo…</p>
+    <iframe class="demo__iframe" src="${echapper(lien.href)}"
+            title="Démo ${echapper(titre)}" allow="fullscreen"></iframe>`;
+  // Au cas où une démo aurait un fond transparent : on retire le message
+  // dès que la page de la démo est chargée.
+  demoCadre.querySelector("iframe").addEventListener("load", () => {
+    demoCadre.querySelector(".demo__chargement")?.remove();
+  });
+
+  elementAvantDemo = lien;
+  // On garde l'état existant (ex. { projet: "aicg" }) et on y ajoute demo
+  history.pushState({ ...history.state, demo: true }, "");
+  fenetreDemo.showModal();
+}
+
+
+/* Ferme la fenêtre et supprime tout de suite l'iframe : la démo s'arrête
+   et cesse d'utiliser la carte graphique. Le focus revient au bouton
+   « Essayer la démo ». */
+function fermerDemo() {
+  if (fenetreDemo.open) fenetreDemo.close();
+  demoCadre.innerHTML = "";
+  demoInfos.innerHTML = "";
+  if (elementAvantDemo && document.contains(elementAvantDemo)) {
+    elementAvantDemo.focus();
+  }
+  elementAvantDemo = null;
+}
+
+
+function demanderFermetureDemo() {
+  if (history.state && history.state.demo) {
+    history.back(); // « popstate » fermera la fenêtre
+  } else {
+    fermerDemo();
+  }
+}
+
+
+document.addEventListener("click", (evenement) => {
+  const lien = evenement.target.closest("[data-demo]");
+  if (!lien) return;
+  // Petit écran : on laisse le lien ouvrir un nouvel onglet
+  if (!ecranAssezLarge.matches) return;
+  // Ctrl / Cmd / Maj + clic : le visiteur veut un nouvel onglet, on le laisse
+  if (evenement.ctrlKey || evenement.metaKey || evenement.shiftKey) return;
+  evenement.preventDefault();
+  ouvrirDemo(lien);
+});
+
+fenetreDemo.querySelector("[data-fermer]").addEventListener("click", demanderFermetureDemo);
+
+// Échap (tant que le clavier n'est pas dans la démo elle-même : une page
+// venant d'un autre site garde ses touches pour elle)
+fenetreDemo.addEventListener("cancel", (evenement) => {
+  evenement.preventDefault();
+  demanderFermetureDemo();
+});
+
+// Sécurité : si la fenêtre se ferme par un autre moyen, on fait le ménage
+fenetreDemo.addEventListener("close", () => {
+  if (demoCadre.innerHTML) fermerDemo();
 });
 
 
