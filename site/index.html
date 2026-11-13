@@ -128,11 +128,104 @@
       </div>
     </section>
 
-    <!-- ===================== 4. Parcours et formation (étape 7) ===================== -->
+    <!-- ===================== 4. Parcours et formation ===================== -->
+    <!-- Source : docs/parcours.md. Texte fixe, écrit directement ici (les
+         projets, eux, viennent du fichier de données). -->
     <section class="section" id="parcours" aria-labelledby="titre-parcours">
       <div class="conteneur">
         <h2 class="section__titre libelle" id="titre-parcours"><span aria-hidden="true">03 /</span> Parcours</h2>
-        <p class="a-venir libelle">Formation et expériences : section à venir (étape 7)</p>
+
+        <!-- Une ligne par étape, de la plus récente à la plus ancienne (classées
+             par date de fin : les formations en cours d'abord).
+             <ol> : liste ordonnée, l'ordre a un sens (chronologie). -->
+        <ol class="parcours__liste" role="list">
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">Sept. 2025 – déc. 2027</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">Master of Science in Creative Technology</h3>
+              <p class="parcours__lieu">Institute for Future Technologies, Paris</p>
+            </div>
+            <p class="parcours__type libelle">Formation <span class="badge">En cours</span></p>
+          </li>
+
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">Sept. 2022 – juin 2027</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">Cycle ingénieur, majeure Creative Technologies</h3>
+              <p class="parcours__lieu">ESILV, Paris · cycle préparatoire inclus</p>
+              <p class="parcours__detail">Informatique, IA, infographie, électronique (circuits, PCB), prototypage 3D et CAO.</p>
+            </div>
+            <p class="parcours__type libelle">Formation <span class="badge">En cours</span></p>
+          </li>
+
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">Mai – août 2026</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">Stagiaire ingénieur en développement logiciel</h3>
+              <p class="parcours__lieu">SEGULA Technologies, mission chez Stellantis · Trappes / Poissy</p>
+              <p class="parcours__detail">Application de capitalisation de projet pour une équipe de validation de systèmes embarqués&nbsp;: bureau (PySide6), puis web (Flask).</p>
+            </div>
+            <p class="parcours__type libelle">Stage</p>
+          </li>
+
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">Juin – sept. 2024</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">Stagiaire à la direction générale</h3>
+              <p class="parcours__lieu">SOFINCO, groupe Crédit Agricole · Massy / Roubaix</p>
+              <p class="parcours__detail">Immersion transverse&nbsp;: IT, data, marketing, finance, commercial.</p>
+            </div>
+            <p class="parcours__type libelle">Stage</p>
+          </li>
+
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">Sept. 2021 – juin 2022</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">PASS, première année d'études de santé</h3>
+              <p class="parcours__lieu">Université de Paris</p>
+            </div>
+            <p class="parcours__type libelle">Formation</p>
+          </li>
+          <!-- Baccalauréat (2018 – 2021) retiré à la demande d'Alexandre
+               (13/11/2026) : il reste dans docs/parcours.md. -->
+        </ol>
+
+        <!-- Compétences, langues et distinction : même fiche « libellé / valeur »
+             que le profil. Titre caché : il structure la page pour les lecteurs
+             d'écran, les libellés suffisent à l'écran. -->
+        <h3 class="visuellement-cache">Compétences, langues et distinction</h3>
+        <div class="grille parcours__fiches">
+          <dl class="parcours__fiche">
+            <div class="fiche__ligne">
+              <dt class="libelle">Programmation</dt>
+              <dd>Python, C++ / C#, SQL</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Développement d'applications</dt>
+              <dd>Flask, PySide6 (Qt), API REST, HTML / CSS</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Logiciels</dt>
+              <dd>Git, suite Office, CAO 3D (SolidWorks, Fusion), CAO électronique (KiCad), impression 3D (OrcaSlicer, Bambu Studio)</dd>
+            </div>
+          </dl>
+          <dl class="parcours__fiche">
+            <div class="fiche__ligne">
+              <dt class="libelle">Langues</dt>
+              <dd>Français (langue maternelle), anglais (B2), espagnol (B1), japonais (A1)</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Distinction</dt>
+              <dd>Brevet d'initiation aéronautique (BIA), mention bien, 2018</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Centres d'intérêt : une ligne discrète -->
+        <p class="parcours__interets">
+          <span class="libelle">Centres d'intérêt</span>
+          Volley-ball et escrime (10 ans) · Échecs, niveau avancé (15 ans de pratique) · Voyages à la découverte de différents écosystèmes
+        </p>
       </div>
     </section>
 

@@ -68,7 +68,7 @@ contribuer à des projets d'ingénierie de la conception à la validation.
   d'équipe, communication, pensée analytique
 
 ## Langues
-Français ([À CONFIRMER : « C3 » sur le CV, à remplacer par « langue maternelle » ?]), anglais (B2), espagnol (B1), japonais (A1)
+Français (langue maternelle, équivalent C2 ; précisé le 13/11/2026, remplace le « C3 » du CV), anglais (B2), espagnol (B1), japonais (A1)
 
 ## Distinctions
 - Brevet d'initiation aéronautique (BIA), mention bien, 2018

@@ -889,3 +889,141 @@ ul.detail__liste {
   margin-top: var(--espace-1);
   font-size: 0.9375rem;
 }
+
+
+/* -------------------------------------------------------------------------
+   5. Parcours
+   Liste en lignes encadrées (comme la liste d'articles de bermawy), puis
+   fiche « libellé / valeur » et centres d'intérêt.
+   ------------------------------------------------------------------------- */
+
+/* Lignes blanches empilées : chaque ligne a sa bordure, sauf en haut pour ne
+   pas doubler le trait avec la ligne précédente. */
+.parcours__etape {
+  display: grid;
+  gap: var(--espace-1);
+  padding: var(--espace-3);
+  border: 1px solid var(--bordure);
+  background-color: var(--blanc);
+}
+
+.parcours__etape + .parcours__etape {
+  border-top: 0;
+}
+
+.parcours__dates {
+  color: var(--accent);
+}
+
+/* Intitulé en texte courant gras (pas en capitales comme les grands titres) :
+   plus facile à lire dans une liste */
+.parcours__intitule {
+  font-family: var(--police-texte);
+  font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem); /* 18 → 22 px */
+  font-weight: 600;
+  line-height: 1.3;
+  text-transform: none;
+}
+
+.parcours__lieu {
+  margin-top: 0.125rem;
+}
+
+.parcours__detail {
+  margin-top: var(--espace-1);
+  color: var(--gris);
+  font-size: 0.9375rem;
+}
+
+.parcours__type {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espace-1);
+  color: var(--gris);
+}
+
+.parcours__type .badge {
+  color: var(--encre);
+}
+
+/* Tablette : dates à gauche, le reste à droite, le type sous l'établissement */
+@media (min-width: 40em) {
+  /* 13rem : « Sept. 2025 – déc. 2027 » tient sur une ligne */
+  .parcours__etape {
+    grid-template-columns: 13rem 1fr;
+    column-gap: var(--espace-3);
+  }
+
+  .parcours__dates {
+    padding-top: 0.3em; /* aligné sur la 1re ligne de l'intitulé */
+  }
+
+  .parcours__type {
+    grid-column: 2;
+  }
+}
+
+/* Ordinateur : trois colonnes, dates | intitulé | type aligné à droite */
+@media (min-width: 64em) {
+  .parcours__etape {
+    grid-template-columns: 13rem 1fr 14rem;
+  }
+
+  /* align-self: start : en haut de la ligne, au niveau des dates (sinon le
+     bloc s'étire sur toute la hauteur et son contenu se retrouve centré) */
+  .parcours__type {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+    justify-content: flex-end;
+  }
+}
+
+/* Compétences et langues : l'une sous l'autre sur mobile, côte à côte sur
+   ordinateur (comme la fiche du profil) */
+.parcours__fiches {
+  margin-top: var(--espace-8);
+  row-gap: 0;
+}
+
+.parcours__fiche {
+  grid-column: 1 / -1;
+}
+
+/* Sur mobile, les deux fiches se suivent : pas de double trait entre elles */
+.parcours__fiche + .parcours__fiche .fiche__ligne:first-child {
+  border-top: 0;
+}
+
+/* Libellés plus larges que dans le profil : « Développement d'applications » */
+@media (min-width: 40em) {
+  .parcours__fiche .fiche__ligne {
+    grid-template-columns: 12rem 1fr;
+  }
+}
+
+@media (min-width: 64em) {
+  .parcours__fiches {
+    column-gap: var(--espace-8);
+  }
+
+  .parcours__fiche {
+    grid-column: span 6;
+  }
+
+  .parcours__fiche + .parcours__fiche .fiche__ligne:first-child {
+    border-top: 1px solid var(--bordure);
+  }
+}
+
+/* Centres d'intérêt : une ligne discrète, en gris */
+.parcours__interets {
+  margin-top: var(--espace-4);
+  color: var(--gris);
+  font-size: 0.9375rem;
+}
+
+.parcours__interets .libelle {
+  margin-right: var(--espace-1);
+}
