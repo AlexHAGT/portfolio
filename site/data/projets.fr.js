@@ -293,7 +293,8 @@ const PROJETS = [
       { libelle: "Rôle", valeur: "Conception, état de l'art, développement du prototype (3D, interface, machine learning), protocole d'évaluation" },
       { libelle: "Outils prévus", valeur: "Python, PyVista / VTK, Open3D, NumPy / SciPy, PyTorch" },
       // Aucun résultat n'existe encore : ne pas en inventer (fiche du projet)
-      { libelle: "État", valeur: "Prototype en développement. Fin du projet en janvier 2027" },
+      // Jalon du 20/11/2026 atteint (confirmé par Alexandre le 20/11/2026)
+      { libelle: "État", valeur: "Démo minimale fonctionnelle (novembre 2026). Fin du projet en janvier 2027" },
     ],
     image: {
       fichier: "img/occlumap/occlumap-maquette",
@@ -405,7 +406,7 @@ const PROJETS = [
               type: "etapes",
               elements: [
                 { titre: "Octobre 2026", texte: "Environnement, données, affichage des STL, sélection manuelle des cuspides, ajustement de la sphère" },
-                { titre: "20 novembre 2026", texte: "Jalon : démo minimale complète (carte signée et tableau par dent)" },
+                { titre: "20 novembre 2026", texte: "Jalon atteint : démo minimale fonctionnelle (carte signée et tableau par dent)" },
                 { titre: "Décembre 2026", texte: "Réglages interactifs, mode « référence imposée », détection automatique des cuspides" },
                 { titre: "Janvier 2027", texte: "Évaluation avec les praticiens, analyse, soutenance" },
               ],

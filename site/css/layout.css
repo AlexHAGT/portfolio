@@ -121,8 +121,11 @@
    3. Sections
    ------------------------------------------------------------------------- */
 
+/* Chaque section prend la moitié de l'espace en haut et l'autre moitié en
+   bas : entre deux sections, on obtient bien --espace-section au total
+   (64 px sur mobile, 96 px sur ordinateur), et non le double. */
 .section {
-  padding-block: var(--espace-section);
+  padding-block: calc(var(--espace-section) / 2);
 }
 
 /* Le profil est la première section : moins d'espace au-dessus */

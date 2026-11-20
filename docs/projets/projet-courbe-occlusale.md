@@ -54,7 +54,7 @@ Les briques existent séparément dans la littérature (calcul de la sphère de 
 | Période | Objectif |
 | --- | --- |
 | Oct. 2026 | Environnement, données, affichage des STL, sélection manuelle des cuspides, ajustement de la sphère |
-| 20 nov. 2026 | Jalon : démo minimale complète (carte signée + tableau par dent) |
+| 20 nov. 2026 | Jalon : démo minimale complète (carte signée + tableau par dent). **Atteint** : démo minimale fonctionnelle (confirmé le 20/11/2026) |
 | Déc. 2026 | Réglages interactifs, mode « référence imposée », détection automatique des cuspides |
 | Janv. 2027 | Évaluation avec les praticiens, analyse, soutenance |
 
@@ -68,9 +68,10 @@ Traitement de données 3D · apprentissage automatique appliqué à la santé ·
 
 ## Visuels disponibles
 
-- Maquette d'écran dessinée à la main (carte couleur de l'arcade, réglages, tableau par dent)
+- Maquette d'écran **générée par IA**, valeurs fictives (carte couleur de l'arcade, réglages, tableau par dent). Légende obligatoire : « Maquette conceptuelle générée par IA, valeurs fictives »
 - Tableau Miro de l'état de l'art (5 thèmes, 25 éléments)
 - Figure d'un scan intra-oral issue de Wen et al. 2025 (licence CC BY 4.0, à citer)
+- Capture de la carte des contacts entre arcades dans le logiciel d'un scanner intra-oral, faite par un ami chirurgien-dentiste (conservée sur le site, décision d'Alexandre du 20/11/2026)
 
 ## À ne pas affirmer dans le portfolio
 

@@ -97,7 +97,9 @@
   --espace-4: 2rem;     /*  32 px */
   --espace-6: 3rem;     /*  48 px */
   --espace-8: 4rem;     /*  64 px */
-  --espace-section: 6rem; /* 96 px entre les sections sur mobile */
+  /* Espace entre deux sections (et entre deux grands blocs) : réduit le
+     20/11/2026 à la demande d'Alexandre (auparavant 96 / 160 px) */
+  --espace-section: 4rem; /* 64 px entre les sections sur mobile */
 
   /* Grille : valeurs mobiles, élargies plus bas pour tablette et ordinateur */
   --colonnes: 4;
@@ -124,7 +126,7 @@
     --colonnes: 12;
     /* 48 px, puis grandit avec l'écran (4 % de sa largeur) jusqu'à 96 px */
     --marge: clamp(3rem, 4vw, 6rem);
-    --espace-section: 10rem; /* 160 px entre les sections */
+    --espace-section: 6rem; /* 96 px entre les sections */
   }
 }
 

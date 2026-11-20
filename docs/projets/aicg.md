@@ -5,7 +5,7 @@ categorie: projet-secondaire
 type: "Groupe de projets de cours"
 cours: "AICG"
 periode: "novembre 2025 – janvier 2026"
-image: "[À COMPLÉTER : visuel de la carte, par ex. un montage des 3 captures]"
+image: "aucune : la démo sert d'illustration (aperçu dessiné en fenêtre de navigateur, décision du 13/11/2026)"
 projets:
   - classdigit
   - raymarching-webgpu
@@ -54,7 +54,7 @@ trois projets réalisés dans le cours AICG.
 - **Démo :** https://alexhagt.github.io/ClassDiGit/
 - **Code :** https://github.com/AlexHAGT/ClassDiGit
 - **Date :** novembre 2025
-- **Capture :** [À COMPLÉTER : capture de l'interface avec un chiffre dessiné]
+- **Capture :** non nécessaire (pas d'image pour AICG : la démo sert d'illustration)
 
 **En une phrase :** on dessine un chiffre à la souris, et deux réseaux de neurones le
 reconnaissent instantanément, directement dans le navigateur.
@@ -86,7 +86,7 @@ jusqu'à son utilisation dans une application, sans serveur.
 - **Démo :** https://alexhagt.github.io/Projet-CG-WebGPU-AH-/
 - **Code :** https://github.com/AlexHAGT/Projet-CG-WebGPU-AH-
 - **Date :** décembre 2025
-- **Capture :** disponible dans le dépôt (`How it looks like.png`), à copier dans `assets/`
+- **Capture :** disponible dans le dépôt (`How it looks like.png`), non utilisée (la démo sert d'illustration)
 
 **En une phrase :** une petite scène 3D (sol en damier, sphère et cube) calculée en temps
 réel par la carte graphique, dont on modifie les objets avec des curseurs.
@@ -113,7 +113,7 @@ puis cliquer une fois sur « Compile ». Afficher cette consigne au-dessus de la
 - **Démo :** https://alexhagt.github.io/rag-lit-reviewer/
 - **Code :** https://github.com/AlexHAGT/rag-lit-reviewer
 - **Date :** janvier 2026
-- **Capture :** [À COMPLÉTER : capture de l'interface avec une revue générée]
+- **Capture :** non nécessaire (pas d'image pour AICG : la démo sert d'illustration)
 
 **En une phrase :** on dépose des articles scientifiques en PDF, et un modèle de langage
 local en tire une revue de littérature structurée, sans qu'aucune donnée ne quitte le navigateur.

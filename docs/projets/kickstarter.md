@@ -7,7 +7,7 @@ annee: 2026
 statut: "Campagne financée"
 lieu: "Paris, France"
 lien: "https://www.kickstarter.com/projects/petale/quickstarter-petale"
-image: je vais ajouter des images dans les assets plus tard. 
+image: "assets/kickstarter/ : photo de la lampe allumée (carte), pièces et seconde photo (vue détaillée). Frise de campagne écartée (plus à jour)"
 ---
 
 # Pétale — abat-jour modulable en acrylique

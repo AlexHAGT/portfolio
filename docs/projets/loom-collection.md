@@ -15,7 +15,8 @@
 | Contexte | Projet de soutenance, ESILV, 4e année, Master Creative Technology |
 | Période | Printemps 2026 |
 | Équipe | Binôme : Alexandre HAGUET & Alexandre LE PORT |
-| Rôle d'Alexandre Haguet | `TODO : préciser la répartition (hardware, back-end IA, web app, étude utilisateurs…)` |
+| Rôle d'Alexandre Haguet | Prototypage et une partie du code (validé le 23/10/2026) |
+| Code | Python · dépôt : https://github.com/Alexlp05/Loom (lien « Voir le code » sur le site) |
 | Statut | Prototype fonctionnel de bout en bout, testé auprès du public cible |
 | Domaines | HCI, IA générative embarquée, objets connectés, prototypage hardware, recherche utilisateur, silver economy |
 
@@ -81,7 +82,7 @@ Point clé : aucune courbe d'apprentissage. Décrocher suffit.
 ```
 Principes : local, rapide, simple d'utilisation. Tout le traitement reste en local (aucune donnée envoyée dans le cloud), ce qui protège la vie privée.
 
-**Tags tech pour le portfolio :** Raspberry Pi 5, GPIO, Python `TODO: confirmer le langage`, WebSocket, Faster-Whisper, Ollama, Mistral, Kokoro TTS, SQLite, web app.
+**Tags tech pour le portfolio :** Raspberry Pi 5, GPIO, Python (confirmé), WebSocket, Faster-Whisper, Ollama, Mistral, Kokoro TTS, SQLite, web app.
 
 ---
 
@@ -138,8 +139,8 @@ Réplication de **Pradhan et al., 2020** (personnes âgées et Alexa ; étude or
 
 **Identité visuelle utilisée dans la soutenance (réutilisable) :** fond `#B8BCC2`, cartes `#A8ACB4`, accents orange `#D4873E`, bleu `#3D8BA6`, vert `#3A9E6B`.
 
-**Visuels disponibles (à fournir dans `/assets/loom/`) :** `TODO` photo du téléphone GPO 746, intérieur du Teller, schéma de câblage, capture de la web app (frise), photo du test utilisateur, visuels concept Tuner/Imprint (images Pinterest : ne pas publier sans droits, préférer des visuels originaux).
+**Visuels (dans `assets/Loom/`, mis à jour le 20/11/2026) :** utilisés sur le site : photo du test utilisateur (anonymisée, seule la main est visible, visuel principal), capture de la web app (frise), intérieur du Teller. Écartés : `phone_box.jpeg` (emballage commercial), `phone_front.png`. Non fourni : schéma de câblage. Visuels concept Tuner/Imprint : images Pinterest, ne pas publier sans droits.
 
-**Langue du site :** `TODO : FR, EN ou bilingue`.
+**Langue du site :** français ; version anglaise prévue plus tard (bascule FR / EN, étape 12). Accroche traduite en français sur le site.
 
 **À NE PAS faire :** inventer des métriques (latence, nombre d'utilisateurs, précision), présenter Tuner/Imprint comme fonctionnels, ou exagérer le statut entrepreneurial (le pilote EHPAD est *prévu*, pas réalisé).

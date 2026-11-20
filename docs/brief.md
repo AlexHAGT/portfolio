@@ -18,24 +18,26 @@ Première impression. En quelques secondes, le visiteur doit savoir :
 - ce que je fais et ce que je cherche ;
 - ce qui me distingue.
 Une phrase d'accroche forte plutôt qu'un long paragraphe.
-Contenu : [À COMPLÉTER : accroche, statut actuel, ce que je recherche]
+Contenu (validé le 23/10/2026) : accroche tirée du CV 2026 ; étudiant en 5e année à l'ESILV,
+majeure Creative Technologies ; recherche un stage de fin d'études de 5 à 6 mois à partir de
+mars 2027 (médical, défense, aéronautique / naval, énergie). Pas de photo pour l'instant.
 
 ### 2. Projets principaux (mis en avant)
 Les deux projets les plus importants, avec la plus grande place visuelle.
-- **Loom**
-- **Projet dentaire**, en cours : le statut « en cours » doit être visible.
+- **Loom** (Loom Collection, The Teller)
+- **Projet dentaire**, nommé **OccluMap**, en cours : le statut « en cours » doit être visible.
 
 Pour chacun, afficher au minimum : un visuel, le contexte, mon rôle, les outils ou
 compétences mobilisés et le résultat (ou l'état d'avancement).
 Ces projets peuvent mériter une page ou une vue détaillée.
-Détails : `docs/projets/loom.md` et `docs/projets/projet-dentaire.md`.
+Détails : `docs/projets/loom-collection.md` et `docs/projets/projet-courbe-occlusale.md`.
 
 ### 3. Projets secondaires
 Présentation plus compacte que les projets principaux (cartes, grille…).
-- **Kickstarter**
+- **Kickstarter** (projet **Pétale**, « Kickstarter » bien visible)
 - **Projets AICG**, regroupés dans un seul bloc.
-- **Projet de stage de 4e année** : pas encore décidé. Prévoir la structure pour pouvoir
-  l'ajouter ou le retirer facilement.
+- **Projet de stage de 4e année** (SEGULA Technologies) : carte prête mais cachée, décision
+  du 20/11/2026 ; le stage figure dans le parcours.
 
 Détails : un fichier par projet dans `docs/projets/`.
 
@@ -46,10 +48,10 @@ Détails : `docs/parcours.md`.
 
 ### 5. Contact et réseaux
 Fin du parcours de lecture : un appel à l'action clair pour me contacter.
-- E-mail : [À COMPLÉTER]
-- LinkedIn : [À COMPLÉTER]
-- Autres réseaux (GitHub, etc.) : [À COMPLÉTER]
-- CV téléchargeable en PDF : [À CONFIRMER]
+- E-mail : alexandre.haguet@icloud.com
+- LinkedIn : www.linkedin.com/in/alexandre-haguet-2995742ab (corrigé le 20/11/2026)
+- Autres réseaux : GitHub, github.com/AlexHAGT
+- CV téléchargeable en PDF : plus tard (version sans numéro de téléphone)
 
 ## Ton et style
 - Professionnel mais personnel, pas de jargon creux.
@@ -68,4 +70,6 @@ structure, la hiérarchie et le choix des polices, sans les copier.
 ## Questions ouvertes
 - Site sur une seule page qui défile, ou pages séparées pour les projets principaux ? je ne sais pas encore, je pense plutot une grosse page qui défile mais on peut cliquer sur les projets pour avoir une fenetre qui détaille plus. mais bon on va construire cela étape par étape. 
 - Le stage de 4e année figure-t-il dans les projets secondaires ? on verra plus tard 
+  → Réglé (20/11/2026) : non, carte cachée ; il reste dans le parcours.
+- Réglé (étape 5b) : une seule page qui défile, avec une fenêtre de détail par projet.
 - Une version en anglais à terme ? oui à terme une possibilité de switch entre francais et anglais 

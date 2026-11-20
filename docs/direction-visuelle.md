@@ -80,8 +80,8 @@ Conçue d'abord pour mobile (règle du projet).
 | Ordinateur (> 1024 px) | 12 | 48 → 96 px (4 % de la largeur) | 24 px |
 
 - Largeur maximale du contenu : 1920 px, centrée (1440 px au départ, élargie le 23/10/2026 : sur grand écran, les marges paraissaient trop larges).
-- Espacements multiples de 8 px. Grand espace entre les sections (96 px sur mobile, 160 px sur ordinateur) :
-  la page doit respirer.
+- Espacements multiples de 8 px. Espace entre les sections : 64 px sur mobile, 96 px sur ordinateur
+  (réduit le 20/11/2026 à la demande d'Alexandre ; au départ 96 / 160 px, jugé trop grand).
 - Quadrillage du fond : carreaux de 24 px, très pâles. Cartes et listes sur fond blanc uni pour la lecture.
 
 ## 5. Mise en page de chaque section
