@@ -82,6 +82,19 @@
   }
 }
 
+/* Très petits écrans (moins de 352 px, ex. 320 px) : lettres et liens un peu
+   plus serrés, pour que les trois liens tiennent sur une ligne, y compris en
+   anglais (« [BACKGROUND] » est plus long que « [PARCOURS] »). */
+@media (max-width: 22em) {
+  .en-tete__liens {
+    column-gap: var(--espace-1);
+  }
+
+  .en-tete__liens a {
+    letter-spacing: 0.02em;
+  }
+}
+
 /* Crochets [ ] autour des liens, ajoutés par le CSS pour ne pas encombrer le
    HTML. Le texte après « / » est vide : les lecteurs d'écran ne lisent pas
    les crochets. */
@@ -98,6 +111,62 @@
 .en-tete__liens a:hover,
 .en-tete__liens a:focus-visible {
   text-decoration: underline;
+}
+
+/* Bascule de langue « FR / EN ».
+   order : change l'ordre d'affichage sans toucher au HTML. Sur mobile, la
+   bascule se place à droite du nom (ligne 1) et le menu passe seul sur la
+   ligne 2 (flex-basis: 100% = toute la largeur). */
+.en-tete__nom { order: 0; }
+.en-tete__langues { order: 1; }
+.en-tete nav { order: 2; flex-basis: 100%; }
+
+.en-tete__langues {
+  display: flex;
+  align-items: center;
+  color: var(--gris);
+}
+
+/* Les deux langues ont la même largeur (44 px, zone cliquable conseillée
+   pour le doigt) et sont centrées : le « / » tombe bien au milieu. */
+.en-tete__langues a,
+.en-tete__langue-active {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+/* Langue actuelle : en encre, non cliquable */
+.en-tete__langue-active {
+  color: var(--encre);
+}
+
+/* Lien vers l'autre langue : couleur des liens */
+.en-tete__langues a {
+  color: var(--accent);
+}
+
+.en-tete__langues a:hover,
+.en-tete__langues a:focus-visible {
+  text-decoration: underline;
+}
+
+/* Tablette et plus : tout sur une ligne. Le menu est poussé à droite
+   (margin-left: auto), la bascule vient après lui, séparée par un filet. */
+@media (min-width: 48em) {
+  .en-tete nav {
+    order: 1;
+    flex-basis: auto;
+    margin-left: auto;
+  }
+
+  .en-tete__langues {
+    order: 2;
+    padding-left: var(--espace-3);
+    border-left: 1px solid var(--bordure);
+  }
 }
 
 /* Ordinateur : tout sur une ligne, et l'en-tête reste visible en haut de

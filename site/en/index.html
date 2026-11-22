@@ -1,0 +1,313 @@
+<!doctype html>
+<!-- =========================================================================
+     VERSION ANGLAISE du portfolio (adresse : …/portfolio/en/).
+     C'est une traduction de ../index.html : même structure, mêmes classes,
+     mêmes identifiants. Toute modification de la page française doit être
+     reportée ici (et inversement).
+     - Chemins : la page est dans le sous-dossier en/, d'où les « ../ »
+       devant css/, fonts/, js/ et data/.
+     - Les projets viennent de ../data/projets.en.js, les textes des boutons
+       créés par JavaScript de ../js/textes.js (choisis grâce à lang="en").
+     ========================================================================= -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Alexandre Haguet · Portfolio</title>
+  <meta name="description" content="Alexandre Haguet, 5th-year engineering student at ESILV, Creative Technologies major. Projects, background and contact. Looking for a 5 to 6-month final-year internship starting in March 2027.">
+
+  <!-- SITE EN CONSTRUCTION : à RETIRER à l'étape 11, comme sur la page française -->
+  <meta name="robots" content="noindex">
+
+  <!-- Version française de la même page (voir ../index.html) -->
+  <link rel="alternate" hreflang="fr" href="https://alexhagt.github.io/portfolio/">
+  <link rel="alternate" hreflang="en" href="https://alexhagt.github.io/portfolio/en/">
+  <link rel="alternate" hreflang="x-default" href="https://alexhagt.github.io/portfolio/">
+
+  <link rel="preload" href="../fonts/bricolage-grotesque-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/instrument-sans-variable.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/sections.css">
+
+  <script src="../js/textes.js" defer></script>
+  <script src="../data/projets.en.js" defer></script>
+  <script src="../js/projets.js" defer></script>
+  <script src="../js/contact.js" defer></script>
+</head>
+<body>
+
+  <a class="lien-evitement libelle" href="#contenu">Skip to content</a>
+
+  <!-- ===================== En-tête ===================== -->
+  <header class="en-tete" id="haut">
+    <div class="conteneur en-tete__interieur">
+      <a class="en-tete__nom libelle" href="#profil">Alexandre Haguet</a>
+
+      <nav aria-label="Main navigation">
+        <ul class="en-tete__liens" role="list">
+          <li><a class="libelle" href="#projets">Projects</a></li>
+          <li><a class="libelle" href="#parcours">Background</a></li>
+          <li><a class="libelle" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <!-- Bascule de langue : ici, l'anglais est la langue actuelle -->
+      <p class="en-tete__langues libelle">
+        <a href="../" hreflang="fr" lang="fr">FR<span class="visuellement-cache"> : version française</span></a>
+        <span class="en-tete__separateur" aria-hidden="true">/</span>
+        <span class="en-tete__langue-active" aria-current="true">EN<span class="visuellement-cache">: English, current language</span></span>
+      </p>
+    </div>
+  </header>
+
+  <main id="contenu">
+
+    <!-- ===================== 1. Profil ===================== -->
+    <section class="section section--profil" id="profil" aria-labelledby="titre-profil">
+      <div class="conteneur">
+        <p class="libelle">Portfolio · 2026</p>
+        <h1 class="profil__nom" id="titre-profil">Alexandre <br>Haguet</h1>
+
+        <div class="grille profil__corps">
+          <div class="profil__texte">
+            <p class="profil__accroche">
+              At the interface of mechanical and electronic prototyping, embedded systems and machine learning, I lead projects from design to validation.
+            </p>
+            <ul class="profil__actions" role="list">
+              <li><a class="bouton bouton--plein libelle" href="#contact">Contact me <span aria-hidden="true">→</span></a></li>
+              <li><a class="bouton libelle" href="#projets">See the projects <span aria-hidden="true">↓</span></a></li>
+            </ul>
+          </div>
+
+          <dl class="profil__fiche">
+            <div class="fiche__ligne">
+              <dt class="libelle">Status</dt>
+              <dd>5th-year engineering student at ESILV, Creative Technologies major</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Alongside</dt>
+              <dd>Master of Science in Creative Technology, Institute for Future Technologies</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Looking for</dt>
+              <dd>5 to 6-month final-year internship, starting in March 2027</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Target sectors</dt>
+              <dd>Medical, defence, aeronautics and naval, energy</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. Projets principaux ===================== -->
+    <section class="section" id="projets" aria-labelledby="titre-projets">
+      <div class="conteneur">
+        <h2 class="section__titre libelle" id="titre-projets"><span aria-hidden="true">01 /</span> Featured projects</h2>
+
+        <!-- Cartes créées par ../js/projets.js à partir de ../data/projets.en.js -->
+        <div class="projets-liste" data-projets="principal"></div>
+
+        <noscript>
+          <p class="a-venir libelle">The projects are displayed with JavaScript. Please enable it to see them.</p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ===================== 3. Projets secondaires ===================== -->
+    <section class="section" id="autres-projets" aria-labelledby="titre-autres-projets">
+      <div class="conteneur">
+        <h2 class="section__titre libelle" id="titre-autres-projets"><span aria-hidden="true">02 /</span> Other projects</h2>
+
+        <div class="cartes-liste" data-projets="secondaire"></div>
+
+        <noscript>
+          <p class="a-venir libelle">The projects are displayed with JavaScript. Please enable it to see them.</p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ===================== 4. Parcours ===================== -->
+    <section class="section" id="parcours" aria-labelledby="titre-parcours">
+      <div class="conteneur">
+        <h2 class="section__titre libelle" id="titre-parcours"><span aria-hidden="true">03 /</span> Background</h2>
+
+        <ol class="parcours__liste" role="list">
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">Sept. 2025 – Dec. 2027</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">Master of Science in Creative Technology</h3>
+              <p class="parcours__lieu">Institute for Future Technologies, Paris</p>
+            </div>
+            <p class="parcours__type libelle">Education <span class="badge">Ongoing</span></p>
+          </li>
+
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">Sept. 2022 – June 2027</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">Engineering degree, Creative Technologies major</h3>
+              <p class="parcours__lieu">ESILV, Paris · including the preparatory cycle</p>
+              <p class="parcours__detail">Computer science, AI, computer graphics, electronics (circuits, PCB), 3D prototyping and CAD.</p>
+            </div>
+            <p class="parcours__type libelle">Education <span class="badge">Ongoing</span></p>
+          </li>
+
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">May – Aug. 2026</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">Software development engineering intern</h3>
+              <p class="parcours__lieu">SEGULA Technologies, assignment at Stellantis · Trappes / Poissy</p>
+              <p class="parcours__detail">Project knowledge-management application for an embedded systems validation team: desktop (PySide6), then web (Flask).</p>
+            </div>
+            <p class="parcours__type libelle">Internship</p>
+          </li>
+
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">June – Sept. 2024</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">Intern, General Management</h3>
+              <p class="parcours__lieu">SOFINCO, Crédit Agricole group · Massy / Roubaix</p>
+              <p class="parcours__detail">Cross-functional immersion: IT, data, marketing, finance, sales.</p>
+            </div>
+            <p class="parcours__type libelle">Internship</p>
+          </li>
+
+          <li class="parcours__etape">
+            <p class="parcours__dates libelle">Sept. 2021 – June 2022</p>
+            <div class="parcours__corps">
+              <h3 class="parcours__intitule">PASS, first year of health studies</h3>
+              <p class="parcours__lieu">Université de Paris</p>
+            </div>
+            <p class="parcours__type libelle">Education</p>
+          </li>
+        </ol>
+
+        <h3 class="visuellement-cache">Skills, languages and award</h3>
+        <div class="grille parcours__fiches">
+          <dl class="parcours__fiche">
+            <div class="fiche__ligne">
+              <dt class="libelle">Programming</dt>
+              <dd>Python, C++ / C#, SQL</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Application development</dt>
+              <dd>Flask, PySide6 (Qt), REST APIs, HTML / CSS</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Software</dt>
+              <dd>Git, Office suite, 3D CAD (SolidWorks, Fusion), electronic CAD (KiCad), 3D printing (OrcaSlicer, Bambu Studio)</dd>
+            </div>
+          </dl>
+          <dl class="parcours__fiche">
+            <div class="fiche__ligne">
+              <dt class="libelle">Languages</dt>
+              <dd>French (native), English (B2), Spanish (B1), Japanese (A1)</dd>
+            </div>
+            <div class="fiche__ligne">
+              <dt class="libelle">Award</dt>
+              <dd>Brevet d'initiation aéronautique (BIA, French introductory aeronautics certificate), with honours, 2018</dd>
+            </div>
+          </dl>
+        </div>
+
+        <p class="parcours__interets">
+          <span class="libelle">Interests</span>
+          Volleyball and fencing (10 years) · Chess, advanced level (15 years of practice) · Travelling to discover different ecosystems
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 5. Contact ===================== -->
+    <!-- Règle du projet : ne jamais afficher le numéro de téléphone. -->
+    <section class="section" id="contact" aria-labelledby="titre-contact">
+      <div class="conteneur">
+        <h2 class="section__titre libelle" id="titre-contact"><span aria-hidden="true">04 /</span> Contact</h2>
+
+        <p class="contact__accroche">I am looking for a 5 to 6-month final-year internship, starting in March 2027. Get in touch.</p>
+
+        <a class="contact__email" href="mailto:alexandre.haguet@icloud.com">alexandre.haguet@<wbr>icloud.com</a>
+
+        <div class="contact__copie">
+          <button class="bouton libelle" type="button" data-copier="alexandre.haguet@icloud.com" hidden>
+            Copy the address
+          </button>
+          <p class="contact__message libelle" role="status" data-copier-message></p>
+        </div>
+
+        <ul class="contact__liens" role="list">
+          <li>
+            <a class="bouton bouton--plein libelle" href="https://www.linkedin.com/in/alexandre-haguet-2995742ab" target="_blank" rel="noopener">
+              LinkedIn <span aria-hidden="true">↗</span>
+              <span class="visuellement-cache">(opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="bouton bouton--plein libelle" href="https://github.com/AlexHAGT" target="_blank" rel="noopener">
+              GitHub <span aria-hidden="true">↗</span>
+              <span class="visuellement-cache">(opens in a new tab)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== Pied de page ===================== -->
+  <footer class="pied">
+    <div class="conteneur">
+      <div class="pied__mentions libelle">
+        <p>© 2026 Alexandre Haguet</p>
+        <a href="#haut">Back to top <span aria-hidden="true">↑</span></a>
+      </div>
+      <p class="pied__nom" aria-hidden="true">Haguet</p>
+    </div>
+  </footer>
+
+  <!-- ===================== Fenêtre de détail d'un projet ===================== -->
+  <dialog class="fenetre" id="fenetre-projet" aria-labelledby="fenetre-titre">
+    <div class="fenetre__barre">
+      <div class="conteneur fenetre__barre-interieur">
+        <p class="libelle" data-fenetre-numero></p>
+        <button class="bouton libelle" type="button" data-fermer autofocus>
+          Close <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+    </div>
+    <div class="conteneur grille fenetre__contenu" data-fenetre-contenu></div>
+  </dialog>
+
+  <!-- ===================== Fenêtre de démo (démos AICG) ===================== -->
+  <dialog class="fenetre fenetre--demo" id="fenetre-demo" aria-labelledby="demo-titre">
+    <div class="fenetre__barre">
+      <div class="conteneur fenetre__barre-interieur">
+        <p class="libelle" id="demo-titre" data-demo-titre></p>
+        <ul class="fenetre__actions" role="list">
+          <li>
+            <a class="bouton libelle" href="#" target="_blank" rel="noopener" data-demo-onglet>
+              Open in a new tab <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li>
+            <a class="bouton libelle" href="#" target="_blank" rel="noopener" data-demo-code>
+              View the code on GitHub <span aria-hidden="true">↗</span>
+              <span class="visuellement-cache">(opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <button class="bouton libelle" type="button" data-fermer autofocus>
+              Close <span aria-hidden="true">✕</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="conteneur demo__infos" data-demo-infos></div>
+    <div class="demo__cadre" data-demo-cadre></div>
+  </dialog>
+
+</body>
+</html>

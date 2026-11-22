@@ -5,6 +5,7 @@
    le navigateur sait écrire dans le presse-papiers (navigator.clipboard) :
    sans JavaScript, ou sur un navigateur trop ancien, il reste invisible et
    le lien e-mail fonctionne quand même.
+   Les messages viennent de js/textes.js (français ou anglais).
    ========================================================================= */
 
 const boutonCopier = document.querySelector("[data-copier]");
@@ -21,10 +22,10 @@ if (boutonCopier && messageCopie && navigator.clipboard) {
     // qu'elle soit terminée avant de passer à la ligne suivante.
     try {
       await navigator.clipboard.writeText(boutonCopier.dataset.copier);
-      messageCopie.textContent = "Adresse copiée ✓";
+      messageCopie.textContent = TEXTES.adresseCopiee;
     } catch {
       // Copie refusée par le navigateur (rare) : on indique quoi faire
-      messageCopie.textContent = "Copie impossible : sélectionnez l'adresse ci-dessus.";
+      messageCopie.textContent = TEXTES.copieImpossible;
     }
 
     clearTimeout(minuteur);

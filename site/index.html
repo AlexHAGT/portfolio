@@ -13,6 +13,13 @@
        référencer la page. À RETIRER à l'étape 11 (mise en ligne définitive). -->
   <meta name="robots" content="noindex">
 
+  <!-- Version anglaise de la même page (hreflang = langue de la page liée).
+       Sert aux moteurs de recherche ; adresses complètes obligatoires.
+       x-default : la page proposée quand aucune langue ne correspond. -->
+  <link rel="alternate" hreflang="fr" href="https://alexhagt.github.io/portfolio/">
+  <link rel="alternate" hreflang="en" href="https://alexhagt.github.io/portfolio/en/">
+  <link rel="alternate" hreflang="x-default" href="https://alexhagt.github.io/portfolio/">
+
   <!-- Précharge les deux polices visibles en premier pour éviter un saut
        d'affichage. « crossorigin » est obligatoire pour précharger une police. -->
   <link rel="preload" href="fonts/bricolage-grotesque-variable.woff2" as="font" type="font/woff2" crossorigin>
@@ -25,7 +32,9 @@
 
   <!-- Scripts. « defer » : ils s'exécutent une fois la page lue, dans l'ordre
        où ils sont écrits. Les données doivent donc venir avant le script
-       qui les utilise. -->
+       qui les utilise. textes.js (textes des boutons) vient en premier.
+       Version anglaise : en/index.html, à garder alignée avec cette page. -->
+  <script src="js/textes.js" defer></script>
   <script src="data/projets.fr.js" defer></script>
   <script src="js/projets.js" defer></script>
   <script src="js/contact.js" defer></script>
@@ -47,7 +56,15 @@
           <li><a class="libelle" href="#contact">Contact</a></li>
         </ul>
       </nav>
-      <!-- Étape 12 : la bascule FR / EN viendra ici -->
+      <!-- Bascule de langue : la langue actuelle est écrite en clair
+           (aria-current), l'autre est un lien vers la page traduite.
+           hreflang et lang="en" : le lien mène à une page en anglais, et
+           les lecteurs d'écran prononcent son texte en anglais. -->
+      <p class="en-tete__langues libelle">
+        <span class="en-tete__langue-active" aria-current="true">FR<span class="visuellement-cache"> : français, langue actuelle</span></span>
+        <span class="en-tete__separateur" aria-hidden="true">/</span>
+        <a href="en/" hreflang="en" lang="en">EN<span class="visuellement-cache">: English version</span></a>
+      </p>
     </div>
   </header>
 

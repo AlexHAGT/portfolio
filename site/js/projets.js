@@ -1,6 +1,7 @@
 /* =========================================================================
    projets.js — fabrique les cartes et les fenêtres de détail des projets
-   à partir de data/projets.fr.js
+   à partir de data/projets.fr.js (ou data/projets.en.js sur la page
+   anglaise). Les textes des boutons viennent de js/textes.js.
 
    Principe : la liste PROJETS (définie dans le fichier de données, chargé
    juste avant ce script) est transformée en HTML, puis insérée dans la page.
@@ -36,8 +37,11 @@ function echapper(texte) {
 /* Typographie française : remplace l'espace avant « : ; ! ? » et à
    l'intérieur des guillemets « » par une espace insécable (&nbsp;), qui
    empêche le retour à la ligne à cet endroit. Sinon, une ligne pourrait
-   commencer par « : » ou un guillemet rester seul en fin de ligne. */
+   commencer par « : » ou un guillemet rester seul en fin de ligne.
+   En anglais, il n'y a pas d'espace avant ces signes : on ne change rien.
+   (LANGUE vient de js/textes.js) */
 function typographie(texte) {
+  if (LANGUE !== "fr") return texte;
   return texte
     .replace(/ ([:;!?»])/g, "&nbsp;$1")
     .replace(/« /g, "«&nbsp;");
@@ -100,7 +104,7 @@ function lienExterne(lien, classe = "bouton libelle") {
   return `
     <a class="${classe}" href="${echapper(lien.url)}" target="_blank" rel="noopener">
       ${echapper(lien.texte)} <span aria-hidden="true">↗</span>
-      <span class="visuellement-cache">(nouvel onglet)</span>
+      <span class="visuellement-cache">${TEXTES.nouvelOnglet}</span>
     </a>`;
 }
 
@@ -117,7 +121,7 @@ function lienDemo(demo, classe = "") {
        data-demo-titre="${echapper(demo.titre)}"
        data-demo-code="${echapper(demo.code)}"
        data-demo-consigne="${echapper(demo.consigne || "")}">
-      <span aria-hidden="true">▶</span> Essayer la démo
+      <span aria-hidden="true">▶</span> ${TEXTES.essayerDemo}
       <span class="visuellement-cache">${echapper(demo.titre)}</span>
     </a>`;
 }
@@ -144,7 +148,7 @@ function boutonsCarte(projet) {
     boutons.push(`
       <button class="bouton bouton--plein libelle" type="button"
               data-ouvrir="${echapper(projet.id)}" aria-haspopup="dialog">
-        Voir le projet <span aria-hidden="true">→</span>
+        ${TEXTES.voirProjet} <span aria-hidden="true">→</span>
       </button>`);
   }
   projet.liens.forEach((lien) => boutons.push(lienExterne(lien)));
@@ -218,7 +222,7 @@ function apercuDemo(demo) {
         <span class="demo-apercu__adresse">${echapper(demo.adresse)}</span>
       </div>
       <div class="demo-apercu__ecran">
-        <p class="libelle demo-apercu__etiquette">Démo en direct</p>
+        <p class="libelle demo-apercu__etiquette">${TEXTES.demoEnDirect}</p>
         <p class="demo-apercu__nom">${echapper(demo.titre)}</p>
         <p class="demo-apercu__texte">${echapper(demo.texte)}</p>
         ${lienDemo(demo, "demo-apercu__bouton")}
@@ -233,7 +237,7 @@ function apercuDemo(demo) {
 function visuelManquant(nom) {
   return `
     <div class="carte__visuel visuel-manquant">
-      <p class="libelle">Visuel à fournir : ${echapper(nom)}</p>
+      <p class="libelle">${echapper(TEXTES.visuelAFournir + nom)}</p>
     </div>`;
 }
 
@@ -258,7 +262,7 @@ function carteProjetSecondaire(projet) {
     ? `
       <button class="bouton bouton--plein libelle carte__bouton" type="button"
               data-ouvrir="${echapper(projet.id)}" aria-haspopup="dialog">
-        Voir le projet <span aria-hidden="true">→</span>
+        ${TEXTES.voirProjet} <span aria-hidden="true">→</span>
         <span class="visuellement-cache">${echapper(projet.titre)}</span>
       </button>`
     : "";
@@ -316,7 +320,7 @@ const BLOCS = {
         <li class="chiffre">
           <p class="chiffre__valeur">${echapper(chiffre.valeur)}</p>
           <p class="chiffre__texte">${echapper(chiffre.texte)}</p>
-          ${chiffre.source ? `<p class="chiffre__source libelle">Source : ${echapper(chiffre.source)}</p>` : ""}
+          ${chiffre.source ? `<p class="chiffre__source libelle">${echapper(TEXTES.source + chiffre.source)}</p>` : ""}
         </li>`).join("")}
     </ul>`,
 
@@ -359,7 +363,7 @@ const BLOCS = {
         </div>`;
       const liaison = bloc.liaisons[index];
       const fleche = liaison
-        ? `<p class="schema__liaison libelle"><span class="visuellement-cache">relié par</span> ${echapper(liaison)} <span aria-hidden="true">⇄</span></p>`
+        ? `<p class="schema__liaison libelle"><span class="visuellement-cache">${TEXTES.reliePar}</span> ${echapper(liaison)} <span aria-hidden="true">⇄</span></p>`
         : "";
       return boite + fleche;
     });
@@ -370,7 +374,7 @@ const BLOCS = {
 
   sources: (bloc) => `
     <div class="detail__sources">
-      <p class="libelle">Sources</p>
+      <p class="libelle">${TEXTES.sources}</p>
       <ul class="detail__liste">
         ${bloc.elements.map((source) => `<li>${lienExterne(source, "detail__lien")}</li>`).join("")}
       </ul>
@@ -389,7 +393,7 @@ const BLOCS = {
     ${bloc.consigne ? `<p class="detail__mention">${echapper(bloc.consigne)}</p>` : ""}
     <ul class="projet__liens" role="list">
       <li>${lienDemo(bloc)}</li>
-      <li>${lienExterne({ texte: "Voir le code sur GitHub", url: bloc.code })}</li>
+      <li>${lienExterne({ texte: TEXTES.voirCode, url: bloc.code })}</li>
     </ul>`,
 };
 
@@ -424,8 +428,8 @@ function sommaire(projet) {
     })
     .join("");
   return `
-    <nav class="detail__sommaire" aria-label="Sommaire du projet">
-      <p class="libelle">Sommaire</p>
+    <nav class="detail__sommaire" aria-label="${TEXTES.sommaireDuProjet}">
+      <p class="libelle">${TEXTES.sommaire}</p>
       <ol class="detail__sommaire-liste" role="list">${liens}</ol>
     </nav>`;
 }
@@ -524,9 +528,9 @@ function ouvrirProjet(id, ajouterHistorique) {
   let numero = null;
   if (projet.categorie === "principal") {
     numero = projetsPrincipaux().indexOf(projet) + 1;
-    fenetreNumero.textContent = `Projet ${numeroSurDeuxChiffres(numero)} / ${projet.titre}`;
+    fenetreNumero.textContent = `${TEXTES.projet} ${numeroSurDeuxChiffres(numero)} / ${projet.titre}`;
   } else {
-    fenetreNumero.textContent = `Autres projets / ${projet.titre}`;
+    fenetreNumero.textContent = `${TEXTES.autresProjets} / ${projet.titre}`;
   }
   fenetreContenu.innerHTML = contenuDetail(projet, numero);
 
@@ -641,16 +645,16 @@ let elementAvantDemo = null;
 function ouvrirDemo(lien) {
   const { demoTitre: titre, demoCode: code, demoConsigne: consigne } = lien.dataset;
 
-  demoTitre.textContent = `Démo / ${titre}`;
+  demoTitre.textContent = `${TEXTES.demo} / ${titre}`;
   demoOnglet.href = lien.href;
   demoCode.href = code;
 
   // Avertissements au-dessus de la démo
-  const infos = ["Démo WebGPU : fonctionne sur Chrome ou Edge récent, sur ordinateur."];
+  const infos = [TEXTES.noteWebGPU];
   if (consigne) infos.push(consigne);
   // navigator.gpu n'existe que si le navigateur sait utiliser WebGPU
   if (!("gpu" in navigator)) {
-    infos.push("Votre navigateur ne semble pas prendre en charge WebGPU : la démo risque de ne pas fonctionner. Essayez Chrome ou Edge récent, ou ouvrez-la dans un nouvel onglet.");
+    infos.push(TEXTES.sansWebGPU);
   }
   demoInfos.innerHTML = infos
     .map((texte) => `<p class="detail__mention">${echapper(texte)}</p>`)
@@ -660,9 +664,9 @@ function ouvrirDemo(lien) {
   // dès qu'elle s'affiche. title : nom du cadre pour les lecteurs d'écran.
   // allow="fullscreen" : autorise le bouton plein écran du Ray marching.
   demoCadre.innerHTML = `
-    <p class="demo__chargement libelle">Chargement de la démo…</p>
+    <p class="demo__chargement libelle">${TEXTES.chargementDemo}</p>
     <iframe class="demo__iframe" src="${echapper(lien.href)}"
-            title="Démo ${echapper(titre)}" allow="fullscreen"></iframe>`;
+            title="${echapper(TEXTES.demo + " " + titre)}" allow="fullscreen"></iframe>`;
   // Au cas où une démo aurait un fond transparent : on retire le message
   // dès que la page de la démo est chargée.
   demoCadre.querySelector("iframe").addEventListener("load", () => {
