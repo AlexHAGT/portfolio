@@ -417,7 +417,7 @@ const PROJETS = [
           titre: "Mon rôle",
           blocs: [
             { type: "paragraphe", texte: "Conception du projet, état de l'art, développement du prototype (géométrie 3D, interface, apprentissage automatique), protocole d'évaluation et pilotage. Je m'appuie sur mon stage chez SEGULA Technologies : une application de bureau en Python, validée par le client, sous contrainte stricte de confidentialité des données." },
-            { type: "paragraphe", texte: "Le projet est mené avec Pierre, étudiant en dernière année de chirurgie dentaire à Sorbonne Université, en clinique à l'hôpital Charles-Foix. Nous avions l'idée d'un projet commun depuis nos études de santé : j'ai fait une année de PASS avant l'école d'ingénieurs. Référente : Xiao Xiao (IFT / ESILV)." },
+            { type: "paragraphe", texte: "Le projet est mené avec Pierre, étudiant en dernière année de chirurgie dentaire à Sorbonne Université, en clinique à l'hôpital Charles-Foix. Nous avions l'idée d'un projet commun depuis nos études de santé : j'ai fait une année de PASS avant l'école d'ingénieurs." },
             {
               type: "liste",
               elements: [
